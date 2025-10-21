@@ -8,12 +8,25 @@ using System.Threading.Tasks;
 
 namespace CookMaster.Managers
 {
-    internal class UserManager : INotifyPropertyChanged
+    public class UserManager : INotifyPropertyChanged
     //Hantera users och samla i dem en lista skapa default user och Admin usrar.
 
     {
-        private User? _currentUser;
+        
         private readonly List<User> _users = new List<User>();
+
+        private User? _loggedIn;
+        public User? LoggedIn
+        {
+            get => _loggedIn;
+
+            private set
+            {
+                _loggedIn = value; 
+                OnPropertyChanged(nameof(LoggedIn)); 
+                OnPropertyChanged(nameof(IsAuthenticated));
+            }
+        }
 
         //Konstruktor
         public UserManager()
@@ -23,23 +36,11 @@ namespace CookMaster.Managers
         }
 
 
-        public User? CurrentUser
-        {
-            get => _currentUser;
-
-            private set
-            {
-                _currentUser = value; 
-                OnPropertyChanged(nameof(CurrentUser)); 
-                OnPropertyChanged(nameof(IsAuthenticated));
-            }
-        }
-
-        public bool IsAuthenticated => CurrentUser != null;
+        public bool IsAuthenticated => LoggedIn != null;
 
         private void SeedDefaultUsers()
         {
-            //_users.Add(new User { Username = "admin", Password = "password", DisplayName = "Administrator", Role = "Admin" });
+            //_users.Add(new User { Username = "admin", Password = "password", Country = "Sweden" });
             _users.Add(new User { Username = "user", Password = "password", Country = "Sweden" });
         }
 
@@ -50,7 +51,7 @@ namespace CookMaster.Managers
                 if (string.Equals(u.Username, username, StringComparison.OrdinalIgnoreCase)
                     && u.Password == password)
                 {
-                    CurrentUser = u;
+                    LoggedIn = u;
                     return true;
                 }
             }
@@ -59,8 +60,35 @@ namespace CookMaster.Managers
 
         public void Logout()
         {
-            CurrentUser = null;
+            LoggedIn = null;
         }
+
+        public void Register(string user, string password, string country)
+        {
+            _users.Add(new User { Username = user, Password = password, Country = country });
+        }
+
+        public void FindUser(string name)
+        {
+            foreach(User u in _users)
+            {
+                if(u.Username == name)
+                {
+                    //return 
+                }
+            }
+        }
+
+        public void ChangePassword(string user, string password)
+        {
+
+        }
+
+        public User? GetLoggedin()
+        {
+            return _loggedIn;
+        }
+
 
 
         //Implementera INotifyPropertyChanged

@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using CookMaster.Managers;
+using CookMaster.ViewModels;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +21,8 @@ namespace CookMaster
         public MainWindow()
         {
             InitializeComponent();
+            var userManager = (UserManager)Application.Current.Resources["UserManager"];
+            DataContext = new MainWindowViewModel(userManager);
         }
     }
 }

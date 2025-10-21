@@ -10,19 +10,48 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
         <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" Margin="25">
             <Label Grid.Row="0" Content="CookMaster" FontSize="100"/>
         </StackPanel>
-
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
-            <TextBox Height="30" Width="100" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5"/>
-            <TextBox Height="30" Width="100" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5"/>
+            <TextBox Text="Användarnamn"  Height="30" 
+                     Width="180" 
+                     FontSize="20" 
+                     VerticalAlignment="Top" 
+                     HorizontalAlignment="Right" 
+                     Margin="5"/>
+            <TextBox Text="Lösenord"  Height="30" 
+                     Width="180" 
+                     FontSize="20" 
+                     VerticalAlignment="Top" 
+                     HorizontalAlignment="Right" 
+                     Margin="5"/>
+
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
+            <TextBox Height="30" 
+                     Width="100" 
+                     FontSize="20" 
+                     VerticalAlignment="Top" 
+                     HorizontalAlignment="Right" 
+                     Margin="5"
+                     Text="{Binding Username, Mode=TwoWay}"/>
+            <TextBox Height="30" 
+                     Width="100" 
+                     FontSize="20" 
+                     VerticalAlignment="Top" 
+                     HorizontalAlignment="Right" 
+                     Margin="5"
+                     Text="{Binding Password, Mode=TwoWay}"/>
         </StackPanel>
         
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="3">
             <Button Content="Login" Height="30" Width="100" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5"/>
             <Button Content="Register" Height="30" Width="100" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5"/>
 

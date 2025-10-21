@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace MVVM_KlonaMIg.MVVM
+namespace CookMaster
 {
     public class RelayCommand : ICommand
     {
