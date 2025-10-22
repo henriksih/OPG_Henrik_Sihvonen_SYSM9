@@ -24,5 +24,19 @@ namespace CookMaster
             var userManager = (UserManager)Application.Current.Resources["UserManager"];
             DataContext = new MainWindowViewModel(userManager);
         }
+
+        private void Pwd_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is MainWindowViewModel vm)
+            {
+                vm.Password = Pwd.Password;
+            }
+        }
+
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

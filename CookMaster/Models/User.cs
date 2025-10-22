@@ -15,13 +15,13 @@ namespace CookMaster.Models
 
         private readonly UserManager? _userManager;
 
-        public void ValidateLogin()
-        {
-            if (_userManager.Login(Username, Password))
-            {
+        //public void ValidateLogin()
+        //{
+        //    if (_userManager.Login(Username, Password))
+        //    {
 
-            }
-        }
+        //    }
+        //}
 
 
     }

@@ -1,4 +1,5 @@
 ﻿using CookMaster.Managers;
+using CookMaster.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CookMaster.ViewModels
 {
@@ -31,18 +33,63 @@ namespace CookMaster.ViewModels
             set { _password = value; OnPropertyChanged(); CommandManager.InvalidateRequerySuggested(); }
         }
 
+        public string Error
+        {
+            get => _error;
+            set { _error = value; OnPropertyChanged(); }
+        }
 
+
+        public ICommand LoginCommand { get; }
         public ICommand? LogoutCommand { get; }
 
         public MainWindowViewModel(UserManager userManager)
         {
             UserManager = userManager;
 
-            if (!UserManager.IsAuthenticated) Console.WriteLine("RecipeListWindow displayed");//ShowRecipeListWindow(); när den finns
-
+            //if (!UserManager.IsAuthenticated)
+            //{
+            //    ShowRecipeListWindow();
+            //}
+            LoginCommand = new RelayCommand(execute => Login(), canExecute => CanLogin());
             LogoutCommand = new RelayCommand(execute => Logout(), canExecute => UserManager.IsAuthenticated);
 
         }
+
+       
+
+        public bool CanLogin() =>
+            !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
+
+        public void Login()
+        {
+            if (UserManager.Login(Username, Password))
+            {
+                ShowRecipeListWindow();
+            }
+                //    Om inloggningen lyckas:
+                //    → "OnLoginSuccess" är ett event
+                //    → Invoke "talar" till alla som lyssnar på det eventet (i det här fallet: LoginWindow)
+                //    → (this, EventArgs.Empty) skickar med en referens till vem som skickade eventet + tomma eventdata
+                
+            else
+                Error = "Fel användarnamn eller lösenord.";
+        }
+
+        // Detta är själva eventet som View (LoginWindow) kan "prenumerera" på
+        // När login lyckas, körs alla metoder som är kopplade till detta event.
+        public event System.EventHandler OnLoginSuccess;
+
+
+        public void ShowRecipeListWindow()
+        {
+            var recipeListWindow = new RecipeListWindow();
+            var result = recipeListWindow.ShowDialog();
+
+            if (result != true)
+                Application.Current.Shutdown();
+        }
+
 
         private void Logout()
         {

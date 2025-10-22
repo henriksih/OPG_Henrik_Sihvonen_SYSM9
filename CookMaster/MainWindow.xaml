@@ -12,6 +12,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
         <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" Margin="25">
@@ -42,27 +43,22 @@
                      HorizontalAlignment="Right" 
                      Margin="5"
                      Text="{Binding Username, Mode=TwoWay}"/>
-            <TextBox Height="30" 
-                     Width="100" 
-                     FontSize="20" 
-                     VerticalAlignment="Top" 
-                     HorizontalAlignment="Right" 
-                     Margin="5"
-                     Text="{Binding Password, Mode=TwoWay}"/>
+            <PasswordBox x:Name="Pwd" 
+                         PasswordChanged="Pwd_PasswordChanged" Height="30" 
+                         Width="100" 
+                         FontSize="20" 
+                         VerticalAlignment="Top" 
+                         HorizontalAlignment="Right" 
+                         Margin="5" />
         </StackPanel>
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="3">
-            <Button Content="Login" Height="30" Width="100" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5"/>
+            <Button Content="Login" Command="{Binding LoginCommand}" Height="30" Width="100" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5"/>
             <Button Content="Register" Height="30" Width="100" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5"/>
-
         </StackPanel>
-           
-            
 
-        
-
-
+        <StackPanel>
+            <TextBlock Text="{Binding Error}" Foreground="Red" Margin="5"/>
+        </StackPanel>
     </Grid>
-    
-    
 </Window>
