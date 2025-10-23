@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace CookMaster.Managers
 {
     public class UserManager : INotifyPropertyChanged
-    //Hantera users och samla i dem en lista skapa default user och Admin usrar.
+    //Hantera users och samla i dem en lista skapa default och Admin usrar.
 
     {
         

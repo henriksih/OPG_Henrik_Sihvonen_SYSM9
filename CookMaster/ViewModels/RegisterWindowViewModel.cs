@@ -1,6 +1,8 @@
 ﻿using CookMaster.Managers;
+using CookMaster.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -17,6 +19,7 @@ namespace CookMaster.ViewModels
         private string _username;
         private string _password;
         private string _country;
+        private List<string> _countries;
         private string _error;
 
         
@@ -33,11 +36,22 @@ namespace CookMaster.ViewModels
             set { _password = value; OnPropertyChanged(); CommandManager.InvalidateRequerySuggested(); }
         }
 
-        public string Country
+        public string Country 
         {
             get => _country;
             set { _country = value; OnPropertyChanged(); CommandManager.InvalidateRequerySuggested(); }
         }
+
+        public List<string> Countries
+        {
+            get => _countries;
+            set
+            {
+                _countries = value;
+                OnPropertyChanged();
+            }
+        }
+
 
 
         public string Error
@@ -57,6 +71,7 @@ namespace CookMaster.ViewModels
         {
             UserManager = userManager;
             RegisterCommand = new RelayCommand(execute => Register(), canExecute => CanRegister());
+            _countries = new List<string> { "Sverige", "Norge", "Danmark" };
         }
 
         private void Register()
