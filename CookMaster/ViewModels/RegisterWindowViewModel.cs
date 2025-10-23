@@ -52,8 +52,6 @@ namespace CookMaster.ViewModels
             }
         }
 
-
-
         public string Error
         {
             get => _error;
@@ -64,7 +62,7 @@ namespace CookMaster.ViewModels
 
         public bool CanRegister() =>!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
 
-
+        public event EventHandler? OnRegisterSuccess;
         //Konstruktor
 
         public RegisterWindowViewModel(UserManager userManager)
@@ -76,9 +74,10 @@ namespace CookMaster.ViewModels
 
         private void Register()
         {
-
             UserManager.Register(Username, Password, Country);
 
+            // Berätta att registreringen var framgångsrik
+            OnRegisterSuccess?.Invoke(this, EventArgs.Empty);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

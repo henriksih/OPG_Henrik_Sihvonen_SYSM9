@@ -89,6 +89,13 @@ namespace CookMaster.ViewModels
         public void ShowRecipeListWindow()
         {
             var recipeListWindow = new RecipeListWindow();
+            var main = Application.Current.MainWindow;
+            if (main != null)
+            {
+                recipeListWindow.Owner = main;
+                main.Hide();
+            }
+
             var result = recipeListWindow.ShowDialog();
 
             if (result != true)

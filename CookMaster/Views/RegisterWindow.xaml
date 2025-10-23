@@ -56,14 +56,15 @@
             TextAlignment="Center"
             Margin="5"/>
         <ComboBox
-            Text="Välj land nedan"  
+            ItemsSource="{Binding Countries}"
+            SelectedItem="{Binding Country}"
             Height="30"
             Width="160"
             FontSize="20"
             Margin="5"/>
         <Button 
             Content="Registrera Dig!"
-            Command="{Binding Register}"
+            Command="{Binding RegisterCommand}"
             Height="30"
             Width="160"
             FontSize="20"

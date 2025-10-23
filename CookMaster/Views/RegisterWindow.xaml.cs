@@ -27,7 +27,16 @@ namespace CookMaster.Views
             var userManager = (UserManager)Application.Current.Resources["UserManager"];
             var registerWindowVM = new RegisterWindowViewModel(userManager);
             DataContext = registerWindowVM;
-            
+
+            // prenumerera på om registerfönstret är framgångsrikt
+            registerWindowVM.OnRegisterSuccess += (s, e) =>
+            {
+                // Och om så blir DialogResult sant
+                this.DialogResult = true;
+            };
+
+            DataContext = registerWindowVM;
+
         }
     }
 }

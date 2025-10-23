@@ -18,6 +18,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" Margin="25">
             <Label Grid.Row="0" Content="CookMaster" FontSize="100"/>
         </StackPanel>
+        
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
             <TextBlock Text="Användarnamn"  
                        Height="30"
@@ -32,8 +33,6 @@
                        FontSize="20"
                        TextAlignment="Center"
                        Margin="5"/>
-
-
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
@@ -58,7 +57,7 @@
             <Button Content="Register" Command="{Binding RegisterCommand}" Height="30" Width="100" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5"/>
         </StackPanel>
 
-        <StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="4">
             <TextBlock Text="{Binding Error}" Foreground="Red" Margin="5"/>
         </StackPanel>
     </Grid>
