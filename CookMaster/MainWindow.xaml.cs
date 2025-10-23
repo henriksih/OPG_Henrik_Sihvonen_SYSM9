@@ -22,7 +22,15 @@ namespace CookMaster
         {
             InitializeComponent();
             var userManager = (UserManager)Application.Current.Resources["UserManager"];
-            DataContext = new MainWindowViewModel(userManager);
+            var mainWindowVM = new MainWindowViewModel(userManager);
+            DataContext = mainWindowVM;
+
+            mainWindowVM.OnLoginSuccess += (s, e) =>
+            {
+                DialogResult = true;
+                Hide();
+            };
+            DataContext = mainWindowVM;
         }
 
         private void Pwd_PasswordChanged(object sender, RoutedEventArgs e)

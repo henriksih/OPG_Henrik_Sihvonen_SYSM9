@@ -42,6 +42,8 @@ namespace CookMaster.ViewModels
 
         public ICommand LoginCommand { get; }
         public ICommand? LogoutCommand { get; }
+        public ICommand? RegisterCommand { get; }
+
 
         public MainWindowViewModel(UserManager userManager)
         {
@@ -53,6 +55,8 @@ namespace CookMaster.ViewModels
             //}
             LoginCommand = new RelayCommand(execute => Login(), canExecute => CanLogin());
             LogoutCommand = new RelayCommand(execute => Logout(), canExecute => UserManager.IsAuthenticated);
+            RegisterCommand = new RelayCommand(execute => ShowRegisterWindow());
+
 
         }
 
@@ -81,6 +85,7 @@ namespace CookMaster.ViewModels
         public event System.EventHandler OnLoginSuccess;
 
 
+
         public void ShowRecipeListWindow()
         {
             var recipeListWindow = new RecipeListWindow();
@@ -89,6 +94,30 @@ namespace CookMaster.ViewModels
             if (result != true)
                 Application.Current.Shutdown();
         }
+
+        public void ShowRegisterWindow()
+        {
+            var registerWindow = new RegisterWindow();
+            //Göm MainWindow medan RegisterWindow är öppen
+            var main = Application.Current.MainWindow;
+            if(main != null)
+            {
+                registerWindow.Owner = main;
+                main.Hide();
+            }
+
+            var result = registerWindow.ShowDialog();
+
+            if (result != true)
+            {
+                Application.Current.Shutdown();
+                return;
+            }
+            //Om registreringen lyckades, dvs dialogen == true, visa MainWindow igen
+            main?.Show();
+            
+        }
+
 
 
         private void Logout()
