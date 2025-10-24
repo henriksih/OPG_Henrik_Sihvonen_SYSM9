@@ -16,7 +16,7 @@ namespace CookMaster.Models
 
         public string? Category { get; set; }
 
-        public DateTime? Date { get; set; }
+        public DateOnly? Date { get; set; }
 
         public User? CreatedBy { get; set; }
 
@@ -24,7 +24,7 @@ namespace CookMaster.Models
 
         //Konstuktor
 
-        public Recipe(string title, string ingredients, string instructions, string category, DateTime date, User createdBy)
+        public Recipe(string title, string ingredients, string instructions, string category, DateOnly date, User createdBy)
         {
 
         }

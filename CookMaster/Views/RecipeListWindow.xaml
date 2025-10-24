@@ -6,7 +6,66 @@
         xmlns:local="clr-namespace:CookMaster.Views"
         mc:Ignorable="d"
         Title="Recipe List" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" Grid.Column="0">
+                    <TextBlock
+                    Text="Användare:" 
+                    Margin="5"/>
+                    <TextBlock
+                    Text="{Binding CurrentUser}" 
+                    Margin="5"/>
+                    <Button
+                    Content="Användarinfo"
+                    Margin="5"/>
+                </StackPanel>
+                
+                <Button
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    Content="Om CookMaster"
+                    Margin="5"/>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock 
+                        Text="Receptlista" 
+                        Margin="5"/>
+                    <ListBox
+                        Margin="5"
+                        ItemsSource="{Binding Recipes}"
+                        SelectedItem="{Binding SelectedRecipe}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+                    <Button 
+                        Content="Lägg till recept" 
+                        Margin="5,100,5,5"/>
+                    <Button 
+                        Content="Receptdetaljer" 
+                        Margin="5,20,5,5"/>
+                    <Button 
+                        Content="Ta bort recept" 
+                        Margin="5,20,5,5"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </StackPanel>
 </Window>
