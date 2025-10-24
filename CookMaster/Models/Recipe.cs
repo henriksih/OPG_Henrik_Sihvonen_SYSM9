@@ -18,13 +18,13 @@ namespace CookMaster.Models
 
         public DateOnly? Date { get; set; }
 
-        public User? CreatedBy { get; set; }
+        public string? CreatedBy { get; set; }
 
         //private readonly UserManager? _userManager;
 
         //Konstuktor
 
-        public Recipe(string title, string ingredients, string instructions, string category, DateOnly date, User createdBy)
+        public Recipe(string title, string ingredients, string instructions, string category, DateOnly date, string createdBy)
         {
 
         }

@@ -22,8 +22,6 @@ namespace CookMaster.ViewModels
         private List<string> _countries;
         private string _error;
 
-        
-
         public string Username
         {
             get => _username;
@@ -63,8 +61,8 @@ namespace CookMaster.ViewModels
         public bool CanRegister() =>!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
 
         public event EventHandler? OnRegisterSuccess;
+        
         //Konstruktor
-
         public RegisterWindowViewModel(UserManager userManager)
         {
             UserManager = userManager;

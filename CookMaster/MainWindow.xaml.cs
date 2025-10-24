@@ -42,9 +42,9 @@ namespace CookMaster
         }
 
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
+        //private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        //{
 
-        }
+        //}
     }
 }

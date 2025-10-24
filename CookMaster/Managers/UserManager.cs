@@ -74,7 +74,7 @@ namespace CookMaster.Managers
             {
                 if(u.Username == name)
                 {
-                    //return 
+                    return;
                 }
             }
         }
