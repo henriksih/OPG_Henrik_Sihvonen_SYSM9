@@ -24,6 +24,7 @@
                     Text="Användare:" 
                     Margin="5"/>
                     <TextBlock
+                    Width="100"
                     Text="{Binding CurrentUser}" 
                     Margin="5"/>
                     <Button

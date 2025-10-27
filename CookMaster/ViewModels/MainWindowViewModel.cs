@@ -88,7 +88,19 @@ namespace CookMaster.ViewModels
 
         public void ShowRecipeListWindow()
         {
-            var recipeListWindow = new RecipeListWindow();
+            var loggedIn = UserManager.GetLoggedin();
+            if (loggedIn == null)
+            {
+                Error = "No logged-in user found.";
+                return;
+            }
+            // Create the RecipeManager now that we have the logged-in user
+            var recipeManager = new RecipeManager(UserManager, loggedIn);
+
+            // Use the new constructor that accepts managers
+            var recipeListWindow = new RecipeListWindow(UserManager, recipeManager);
+
+            //var recipeListWindow = new RecipeListWindow();
             var main = Application.Current.MainWindow;
             if (main != null)
             {

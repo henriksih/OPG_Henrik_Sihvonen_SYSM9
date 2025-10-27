@@ -29,5 +29,13 @@ namespace CookMaster.Views
             var recipeListWindowVM = new RecipeListWindowViewModel(userManager, recipeManager);
             DataContext = recipeListWindowVM;
         }
+
+
+        // New constructor to receive managers explicitly (preferred for runtime)
+        public RecipeListWindow(UserManager userManager, RecipeManager recipeManager)
+        {
+            InitializeComponent();
+            DataContext = new RecipeListWindowViewModel(userManager, recipeManager);
+        }
     }
 }
