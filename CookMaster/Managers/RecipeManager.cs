@@ -12,7 +12,7 @@ namespace CookMaster.Managers
 {
     public class RecipeManager : INotifyPropertyChanged
     {
-        private List<Recipe>? Recipes { get; set; }
+        public List<Recipe>? Recipes { get; set; }
 
         public RecipeManager? recipeManager;
 

@@ -15,6 +15,19 @@ namespace CookMaster.ViewModels
     {
         public UserManager? UserManager { get; }
         public RecipeManager? RecipeManager { get; }
+        //Get access to the recipie list to show in the window
+        public List<Recipe>? Recipes
+        {
+            get => RecipeManager.Recipes;
+            }
+
+        private Recipe? _selectedRecipe;
+        public Recipe? SelectedRecipe
+        {
+            get => _selectedRecipe;
+            set { _selectedRecipe = value; OnPropertyChanged(); }
+        }
+
 
         private string _title;
         public string Title 

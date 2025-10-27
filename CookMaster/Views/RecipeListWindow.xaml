@@ -50,9 +50,10 @@
                         Text="Receptlista" 
                         Margin="5"/>
                     <ListBox
+                        DisplayMemberPath="Title"
                         Margin="5"
                         ItemsSource="{Binding Recipes}"
-                        SelectedItem="{Binding SelectedRecipe}"/>
+                        SelectedItem="{Binding SelectedRecipe, Mode=TwoWay}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="1">

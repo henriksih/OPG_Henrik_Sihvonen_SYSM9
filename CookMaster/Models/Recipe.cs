@@ -26,7 +26,12 @@ namespace CookMaster.Models
 
         public Recipe(string title, string ingredients, string instructions, string category, DateOnly date, string createdBy)
         {
-
+            Title = title;
+            Ingredients = ingredients;
+            Instructions = instructions;
+            Category = category;
+            Date = date;
+            CreatedBy = createdBy;
         }
     }
 
