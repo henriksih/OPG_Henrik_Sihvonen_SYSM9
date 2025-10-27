@@ -21,18 +21,20 @@
 
                 <StackPanel Orientation="Horizontal" Grid.Column="0">
                     <TextBlock
-                    Text="Användare:" 
-                    Margin="5"/>
+                        Text="Användare:" 
+                        Margin="5"/>
                     <TextBlock
-                    Width="100"
-                    Text="{Binding CurrentUser}" 
-                    Margin="5"/>
+                        Width="100"
+                        Text="{Binding CurrentUser}" 
+                        Margin="5"/>
                     <Button
-                    Content="Användarinfo"
-                    Margin="5"/>
+                        Command="{Binding GetUserInfoCommand}"
+                        Content="Användarinfo"
+                        Margin="5"/>
                 </StackPanel>
                 
                 <Button
+                    Command="{Binding AboutCookMasterCommand}"
                     Grid.Column="1"
                     HorizontalAlignment="Right"
                     Content="Om CookMaster"
@@ -57,13 +59,16 @@
                 </StackPanel>
 
                 <StackPanel Grid.Column="1">
-                    <Button 
+                    <Button
+                        Command="{Binding AddRecipeCommand}"
                         Content="Lägg till recept" 
                         Margin="5,100,5,5"/>
-                    <Button 
+                    <Button
+                        Command="{Binding GetRecipeDetailsCommand}"
                         Content="Receptdetaljer" 
                         Margin="5,20,5,5"/>
-                    <Button 
+                    <Button
+                        Command="{Binding RemoveRecipeCommand}"
                         Content="Ta bort recept" 
                         Margin="5,20,5,5"/>
                 </StackPanel>

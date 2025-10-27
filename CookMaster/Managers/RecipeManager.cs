@@ -24,6 +24,12 @@ namespace CookMaster.Managers
 
         }
 
+        // Tom konstruktor behövs för att få bort varning i App.xaml
+        public RecipeManager()
+        {
+            // Ska inte behövas någon implementering, förhoppningsvis
+        }
+
         private void SeedDefaultRecipes(User user)
         {
             Recipes.Add(new Recipe(

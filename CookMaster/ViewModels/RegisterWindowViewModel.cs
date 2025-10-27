@@ -1,5 +1,6 @@
 ﻿using CookMaster.Managers;
 using CookMaster.Models;
+using CookMaster.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +13,7 @@ using System.Windows.Input;
 
 namespace CookMaster.ViewModels
 {
-    public class RegisterWindowViewModel : INotifyPropertyChanged
+    public class RegisterWindowViewModel : ViewModelBase
     {
         public UserManager? UserManager { get; }
 
@@ -78,12 +79,12 @@ namespace CookMaster.ViewModels
             OnRegisterSuccess?.Invoke(this, EventArgs.Empty);
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        //public event PropertyChangedEventHandler? PropertyChanged;
 
-        private void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
+        //private void OnPropertyChanged([CallerMemberName] string name = null)
+        //{
+        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        //}
 
 
 
