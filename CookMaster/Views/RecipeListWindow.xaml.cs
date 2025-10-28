@@ -2,6 +2,7 @@
 using CookMaster.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,8 +27,13 @@ namespace CookMaster.Views
             InitializeComponent();
             var userManager = (UserManager)Application.Current.Resources["UserManager"];
             var recipeManager = (RecipeManager)Application.Current.Resources["RecipeManager"];
-            var recipeListWindowVM = new RecipeListWindowViewModel(userManager, recipeManager);
-            DataContext = recipeListWindowVM;
+            var vm = new RecipeListWindowViewModel(userManager, recipeManager);
+            DataContext = vm;
+
+            if (vm != null)
+            {
+                vm.PropertyChanged += Vm_PropertyChanged;
+            }
         }
 
 
@@ -36,6 +42,32 @@ namespace CookMaster.Views
         {
             InitializeComponent();
             DataContext = new RecipeListWindowViewModel(userManager, recipeManager);
+        }
+
+        private void Vm_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != nameof(RecipeListWindowViewModel.SelectedRecipe)) return;
+            if (DataContext is not RecipeListWindowViewModel vm) return;
+
+            var selected = vm.SelectedRecipe;
+            if (selected == null) return;
+
+            // Öppna RecipeDetailWindow
+            var detailWindow = new RecipeDetailWindow
+            {
+                Owner = this
+            };
+
+            // Skapa recipeDetailWindowViewModel med rätt indata och sätt DataContext
+            detailWindow.DataContext = new RecipeDetailWindowViewModel(vm.UserManager, vm.RecipeManager, selected);
+
+            // Göm nuvarande RecipeListWindow
+            this.Hide();
+            var result = detailWindow.ShowDialog();
+            this.Show();
+
+            // sätt selectedRecipe till null så fönstret inte återöppnas med en gång
+            vm.SelectedRecipe = null;
         }
     }
 }

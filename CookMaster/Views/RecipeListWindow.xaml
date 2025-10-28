@@ -65,7 +65,6 @@
                         Content="Lägg till recept" 
                         Margin="5,100,5,5"/>
                     <Button
-                        IsEnabled="False"
                         Command="{Binding GetRecipeDetailsCommand}"
                         Content="Receptdetaljer" 
                         Margin="5,20,5,5"/>

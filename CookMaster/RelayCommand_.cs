@@ -11,12 +11,14 @@ namespace CookMaster
         //Kollar om kommandot kan köras
         private Func<object, bool> canExecute;
 
+        // Local backing event so we can raise CanExecuteChanged directly
+        private event EventHandler? _canExecuteChanged;
 
         //Event som signalerar när kommandots möjlighet att köras har ändrats
         public event EventHandler? CanExecuteChanged
         {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            add { CommandManager.RequerySuggested += value; _canExecuteChanged += value; }
+            remove { CommandManager.RequerySuggested -= value; _canExecuteChanged -= value; }
         }
 
         public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
@@ -35,6 +37,12 @@ namespace CookMaster
         public void Execute(object? parameter)
         {
             execute(parameter);
+        }
+
+        // Call this from your ViewModel to force WPF to re-evaluate CanExecute for this command
+        public void RaiseCanExecuteChanged()
+        {
+            _canExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

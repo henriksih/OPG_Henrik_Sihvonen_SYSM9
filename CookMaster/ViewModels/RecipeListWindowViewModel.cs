@@ -5,6 +5,7 @@ using CookMaster.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Common;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -23,23 +24,39 @@ namespace CookMaster.ViewModels
         public Recipe? SelectedRecipe
         {
             get => _selectedRecipe;
-            set {
-                if (_selectedRecipe == value) return;
-                _selectedRecipe = value;
-                OnPropertyChanged();
-                OnSelectedRecipeChanged();
+            set
+            {
+                if (_selectedRecipe != value)
+                {
+                    _selectedRecipe = value;
+                    OnPropertyChanged(nameof(_selectedRecipe));
+
+                    // Notifiera kommandot att dess CanExecute-status har ändrats
+                    if (GetRecipeDetailsCommand is RelayCommand relayCommand)
+                    {
+                        relayCommand.RaiseCanExecuteChanged();
+                    }
+                }
             }
+
+            //get => _selectedRecipe;
+            //set {
+            //    if (_selectedRecipe == value) return;
+            //    _selectedRecipe = value;
+            //    OnPropertyChanged();
+            //    OnSelectedRecipeChanged();
+            //}
         }
 
         private void OnSelectedRecipeChanged()
         {
             if (_selectedRecipe == null) return;
-                        
+
             GetRecipeDetailsCommand?.Execute(null);
-                        
+
         }
 
-        // Expose current loggedin user
+        //Expose current loggedin user
         public User? CurrentUser => UserManager?.GetLoggedin();
 
         public RecipeListWindowViewModel(UserManager userManager, RecipeManager recipeManager)
@@ -59,8 +76,8 @@ namespace CookMaster.ViewModels
             }
 
             AddRecipeCommand = new RelayCommand(execute => AddRecipe(), canExecute => CanAdd());
-            GetRecipeDetailsCommand = new RelayCommand(execute => GetRecipe(), canExecute => CanAdd());
-            RemoveRecipeCommand = new RelayCommand(execute => RemoveRecipe(), canExecute => CanAdd());
+            GetRecipeDetailsCommand = new RelayCommand(execute => GetRecipe(), canExecute => CanDo());
+            RemoveRecipeCommand = new RelayCommand(execute => RemoveRecipe(), canExecute => CanDo());
             AboutCookMasterCommand = new RelayCommand(execute => AboutCookMaster(), canExecute => CanAdd());
             GetUserInfoCommand = new RelayCommand(execute => GetUserInfo(), canExecute => CanAdd());
         }
@@ -82,11 +99,13 @@ namespace CookMaster.ViewModels
             }
         }
 
+
         public ICommand AddRecipeCommand { get; }
         public ICommand GetRecipeDetailsCommand { get; }
         public ICommand RemoveRecipeCommand { get; }
         public ICommand AboutCookMasterCommand { get; }
         public ICommand GetUserInfoCommand { get; }
+        
 
         public void AddRecipe()
         {
@@ -117,6 +136,7 @@ namespace CookMaster.ViewModels
             // Kontrollera att ett recept är valt
             if (SelectedRecipe == null) return;
 
+
             var recipeDetailWindow = new RecipeDetailWindow();
             //Göm RecipeListWindow medan RecipeDetailWindow är öppen
             var main = Application.Current.MainWindow;
@@ -144,5 +164,14 @@ namespace CookMaster.ViewModels
         public void AboutCookMaster() { }
         public void GetUserInfo() { UserManager?.GetLoggedin(); }
         public bool CanAdd() => true;
+        public bool CanDo()
+        {
+            if (SelectedRecipe != null)
+            {
+
+                return true;
+            }
+            else return false;
+        }
     }
 }
