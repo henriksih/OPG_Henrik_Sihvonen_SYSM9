@@ -1,4 +1,5 @@
 ﻿using CookMaster.Models;
+using CookMaster.MVVM;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CookMaster.Managers
 {
-    public class UserManager : INotifyPropertyChanged
+    public class UserManager : ViewModelBase
     //Hantera users och samla i dem en lista skapa default och Admin usrar.
 
     {
@@ -91,9 +92,9 @@ namespace CookMaster.Managers
 
 
 
-        //Implementera INotifyPropertyChanged
-        public event PropertyChangedEventHandler? PropertyChanged;
-        private void OnPropertyChanged(string v) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(v));
+        ////Implementera INotifyPropertyChanged
+        //public event PropertyChangedEventHandler? PropertyChanged;
+        //private void OnPropertyChanged(string v) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(v));
         
     }
 }

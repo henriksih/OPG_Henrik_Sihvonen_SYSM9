@@ -1,4 +1,5 @@
 ﻿using CookMaster.Models;
+using CookMaster.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,24 +11,24 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CookMaster.Managers
 {
-    public class RecipeManager : INotifyPropertyChanged
+    public class RecipeManager : ViewModelBase
     {
-        public List<Recipe>? Recipes { get; set; }
+        public ObservableCollection<Recipe>? Recipes { get; set; }
 
         public RecipeManager? recipeManager;
 
         //Konstruktor
         public RecipeManager(UserManager userManager, User user)
         {
-            Recipes = new List<Recipe>();
+            Recipes = new ObservableCollection<Recipe>();
             SeedDefaultRecipes(user);
 
         }
-
+        
         // Tom konstruktor behövs för att få bort varning i App.xaml
         public RecipeManager()
         {
-            // Ska inte behövas någon implementering, förhoppningsvis
+            Recipes = new ObservableCollection<Recipe>();
         }
 
         private void SeedDefaultRecipes(User user)
@@ -51,12 +52,12 @@ namespace CookMaster.Managers
 
         }
 
-        public List<Recipe>? GetAllRecipes()
+        public ObservableCollection<Recipe>? GetAllRecipes()
         {
             return Recipes;
         }
 
-        public List<Recipe>? GetByUser(User user)
+        public ObservableCollection<Recipe>? GetByUser(User user)
         {
             return Recipes;
         }
@@ -66,16 +67,16 @@ namespace CookMaster.Managers
 
         }
 
-        public void UpdateRecipe(Recipe recipe)
+        public void UpdateRecipe(string title, string ingredients, string instructions, string category, DateOnly date, string createdBy)
         {
-
+            Recipes.Add(new Recipe(title, ingredients, instructions, category, date, createdBy));
         }
 
 
 
-        //Implementera INotifyPropertyChanged
-        public event PropertyChangedEventHandler? PropertyChanged;
-        private void OnPropertyChanged(string v) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(v));
+        ////Implementera INotifyPropertyChanged
+        //public event PropertyChangedEventHandler? PropertyChanged;
+        //private void OnPropertyChanged(string v) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(v));
 
     }
 }

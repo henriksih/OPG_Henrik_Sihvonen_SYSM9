@@ -95,10 +95,10 @@ namespace CookMaster.ViewModels
                 Error = "No logged-in user found.";
                 return;
             }
-            // Create the RecipeManager now that we have the logged-in user
+            // Skapa RecipeManager nu när vi har en logged-in user
             var recipeManager = new RecipeManager(UserManager, loggedIn);
 
-            // Use the new constructor that accepts managers
+            // Skapa recipeListWindow med userManager och recipeManager
             var recipeListWindow = new RecipeListWindow(UserManager, recipeManager);
 
             //var recipeListWindow = new RecipeListWindow();

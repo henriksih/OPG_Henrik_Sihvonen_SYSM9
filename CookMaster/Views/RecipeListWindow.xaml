@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CookMaster.Views"
+        xmlns:local="clr-namespace:CookMaster.Views" xmlns:viewmodels="clr-namespace:CookMaster.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:RecipeListWindowViewModel}"
         mc:Ignorable="d"
         Title="Recipe List" Height="450" Width="800">
     <StackPanel>
@@ -24,8 +24,9 @@
                         Text="Användare:" 
                         Margin="5"/>
                     <TextBlock
+                         
                         Width="100"
-                        Text="{Binding CurrentUser}" 
+                        Text="{Binding UserManager.LoggedIn.Username}" 
                         Margin="5"/>
                     <Button
                         Command="{Binding GetUserInfoCommand}"
@@ -54,7 +55,7 @@
                     <ListBox
                         DisplayMemberPath="Title"
                         Margin="5"
-                        ItemsSource="{Binding Recipes}"
+                        ItemsSource="{Binding RecipesView}"
                         SelectedItem="{Binding SelectedRecipe, Mode=TwoWay}"/>
                 </StackPanel>
 
@@ -64,6 +65,7 @@
                         Content="Lägg till recept" 
                         Margin="5,100,5,5"/>
                     <Button
+                        IsEnabled="False"
                         Command="{Binding GetRecipeDetailsCommand}"
                         Content="Receptdetaljer" 
                         Margin="5,20,5,5"/>
