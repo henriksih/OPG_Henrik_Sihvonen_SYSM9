@@ -102,7 +102,7 @@ namespace CookMaster.ViewModels
 
         public ICommand SaveRecipeCommand { get; }
 
-        private void SaveRecipe()
+        public void SaveRecipe()
         {
             if (SelectedRecipe != null)
             {

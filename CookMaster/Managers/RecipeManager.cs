@@ -22,6 +22,7 @@ namespace CookMaster.Managers
         {
             Recipes = new ObservableCollection<Recipe>();
             SeedDefaultRecipes(user);
+            userManager.LoggedIn.MyRecipeList = Recipes;
 
         }
         

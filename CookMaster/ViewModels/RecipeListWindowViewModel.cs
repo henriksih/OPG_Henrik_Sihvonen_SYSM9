@@ -29,14 +29,19 @@ namespace CookMaster.ViewModels
                 if (_selectedRecipe != value)
                 {
                     _selectedRecipe = value;
-                    OnPropertyChanged(nameof(_selectedRecipe));
+                    OnPropertyChanged(nameof(SelectedRecipe));
 
                     // Notifiera kommandot att dess CanExecute-status har ändrats
                     if (GetRecipeDetailsCommand is RelayCommand relayCommand)
                     {
                         relayCommand.RaiseCanExecuteChanged();
                     }
+
                 }
+                //if (GetRecipeDetailsCommand is RelayCommand detailsCmd)
+                //    detailsCmd.RaiseCanExecuteChanged();
+                //if (RemoveRecipeCommand is RelayCommand removeCmd)
+                //    removeCmd.RaiseCanExecuteChanged();
             }
 
             //get => _selectedRecipe;
@@ -130,9 +135,40 @@ namespace CookMaster.ViewModels
             _recipesView?.Refresh();
             recipeListWindow?.Show();
         }
-
+        public event EventHandler<Recipe?>? RequestOpenRecipeDetail;
         public void GetRecipe() 
         {
+            // Kontrollera att ett recept är valt
+            //if (SelectedRecipe == null) return;
+            //RequestOpenRecipeDetail?.Invoke(this, SelectedRecipe);
+            //else
+            //{
+            //    CanDo();
+            //}
+
+            //var recipeDetailWindow = new RecipeDetailWindow();
+            ////Göm RecipeListWindow medan RecipeDetailWindow är öppen
+            //var main = Application.Current.MainWindow;
+            //if (main != null)
+            //{
+            //    recipeDetailWindow.Owner = main;
+            //    main.Hide();
+            //}
+
+            //// Skapa ViewModel med det valda receptet och sätt som DataContext
+            //var vm = new RecipeDetailWindowViewModel(UserManager, RecipeManager, SelectedRecipe);
+            //recipeDetailWindow.DataContext = vm;
+
+            //var result = recipeDetailWindow.ShowDialog();
+
+            //if (result != true)
+            //{
+            //    Application.Current.Shutdown();
+            //    return;
+            //}
+            ////Om registreringen lyckades, visa RecipeListWindow igen
+            //main?.Show();
+
             // Kontrollera att ett recept är valt
             if (SelectedRecipe == null) return;
 

@@ -1,6 +1,7 @@
 ﻿using CookMaster.Managers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,9 @@ namespace CookMaster.Models
         public string? Password { get; set; }
         public string? Country { get; set; }
 
-        private readonly UserManager? _userManager;
+        public ObservableCollection<Recipe>? MyRecipeList;
+
+        //private readonly UserManager? _userManager;
 
         //public void ValidateLogin()
         //{

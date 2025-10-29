@@ -41,8 +41,13 @@ namespace CookMaster.Managers
 
         private void SeedDefaultUsers()
         {
-            //_users.Add(new User { Username = "admin", Password = "password", Country = "Sweden" });
-            _users.Add(new User { Username = "user", Password = "password", Country = "Sweden" });
+            _users.Add(new User
+            {
+                Username = "user",
+                Password = "password",
+                Country = "Sweden",
+                MyRecipeList = new System.Collections.ObjectModel.ObservableCollection<Recipe>()
+            });
         }
 
         public bool Login(string username, string password)
