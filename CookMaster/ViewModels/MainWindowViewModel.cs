@@ -57,11 +57,8 @@ namespace CookMaster.ViewModels
             LoginCommand = new RelayCommand(execute => Login(), canExecute => CanLogin());
             LogoutCommand = new RelayCommand(execute => Logout(), canExecute => UserManager.IsAuthenticated);
             RegisterCommand = new RelayCommand(execute => ShowRegisterWindow());
-
-
         }
 
-       
 
         public bool CanLogin() =>
             !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);

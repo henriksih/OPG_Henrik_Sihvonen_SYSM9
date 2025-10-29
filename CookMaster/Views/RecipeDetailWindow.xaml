@@ -21,21 +21,27 @@
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Text="Receptnamn" Grid.Column="0" Grid.Row="0" Margin="5"/>
+        <TextBox Text="{Binding Title, Mode=TwoWay}" Width="600" Grid.Column="1" Grid.Row="0" Margin="5" IsEnabled="{Binding IsEditing}"/>
+
         <TextBlock Text="Kategori" Grid.Column="0" Grid.Row="1" Margin="5"/>
+        <TextBox Text="{Binding Category, Mode=TwoWay}" Width="600" Grid.Column="1" Grid.Row="1" Margin="5" IsEnabled="{Binding IsEditing}"/>
+
         <TextBlock Text="Ingredienser" Grid.Column="0" Grid.Row="2" Margin="5"/>
+        <TextBox Text="{Binding Ingredients, Mode=TwoWay}" Width="600" Grid.Column="1" Grid.Row="2" Margin="5" IsEnabled="{Binding IsEditing}"/>
+
         <TextBlock Text="Så gör man" Grid.Column="0" Grid.Row="3" Margin="5"/>
+        <TextBox Text="{Binding Instructions, Mode=TwoWay}" Width="600" Grid.Column="1" Grid.Row="3" Margin="5" IsEnabled="{Binding IsEditing}"/>
+
         <TextBlock Text="Datum" Grid.Column="0" Grid.Row="4" Margin="5"/>
+        <DatePicker SelectedDate="{Binding Date, Mode=TwoWay}" Width="600" Grid.Column="1" Grid.Row="4" Margin="5" IsEnabled="{Binding IsEditing}"/>
+
         <TextBlock Text="Skapat av användare" Grid.Column="0" Grid.Row="5" Margin="5"/>
-        <TextBox Text="{Binding Title, Mode=TwoWay}" Width="600" Grid.Column="1" Grid.Row="0" Margin="5" />
-        <TextBox Text="{Binding Category, Mode=TwoWay}" Width="600" Grid.Column="1" Grid.Row="1" Margin="5"/>
-        <TextBox Text="{Binding Ingredients, Mode=TwoWay}" Width="600" Grid.Column="1" Grid.Row="2" Margin="5"/>
-        <TextBox Text="{Binding Instructions, Mode=TwoWay}" Width="600" Grid.Column="1" Grid.Row="3" Margin="5"/>
-        <DatePicker SelectedDate="{Binding Date, Mode=TwoWay}" Width="600" Grid.Column="1" Grid.Row="4" Margin="5"/>
-        <TextBlock Text="{Binding CurrentUser.Username}" Width="600" Grid.Column="1" Grid.Row="5" Margin="5"/>
+        <TextBlock Text="{Binding CurrentUser.Username}" Width="600" Grid.Column="1" Grid.Row="5" Margin="5" IsEnabled="{Binding IsEditing}"/>
 
         <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal">
-            <Button Width="200" Content="Editera receptet" Command="{Binding }" Grid.Column="1" Grid.Row="6" Margin="5"/>
-            <Button Width="200" Content="Spara receptet" Command="{Binding }" Grid.Column="1" Grid.Row="6" Margin="5"/>
+            <Button Width="200" Content="Editera receptet" Command="{Binding EditRecipeCommand}" Grid.Column="1" Grid.Row="6" Margin="5"/>
+            <Button Width="200" Content="Spara receptet" Command="{Binding SaveRecipeCommand }" Grid.Column="1" Grid.Row="6" Margin="5" IsEnabled="{Binding IsEditing}"/>
+            <Button Width="200" Content="Avbryt" Command="{Binding CancelEditCommand}" Margin="5" IsEnabled="{Binding IsEditing}"/>
         </StackPanel>
         
     </Grid>

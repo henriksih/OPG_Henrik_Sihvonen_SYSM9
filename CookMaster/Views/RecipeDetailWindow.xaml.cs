@@ -1,18 +1,7 @@
 ﻿using CookMaster.Managers;
 using CookMaster.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace CookMaster.Views
 {
@@ -24,19 +13,23 @@ namespace CookMaster.Views
         public RecipeDetailWindow()
         {
             InitializeComponent();
-            var userManager = (UserManager)Application.Current.Resources["UserManager"];
-            var recipeManager = (RecipeManager)Application.Current.Resources["RecipeManager"];
-            var recipeDetailWindowVM = new RecipeDetailWindowViewModel(userManager, recipeManager);
-            DataContext = recipeDetailWindowVM;
+            DataContextChanged += OnDataContextChanged;
+        }
 
-            // prenumerera på om registerfönstret är framgångsrikt
-            recipeDetailWindowVM.OnSaveRecipeSuccess += (s, e) =>
-            {
-                // Och om så blir DialogResult sant
-                this.DialogResult = true;
-            };
+        private void OnDataContextChanged(object? sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue is RecipeDetailWindowViewModel oldVm)
+                oldVm.OnSaveRecipeSuccess -= Vm_OnSaveRecipeSuccess;
 
-            DataContext = recipeDetailWindowVM;
+            if (e.NewValue is RecipeDetailWindowViewModel newVm)
+                newVm.OnSaveRecipeSuccess += Vm_OnSaveRecipeSuccess;
+        }
+
+        private void Vm_OnSaveRecipeSuccess(object? sender, EventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Vm_OnSaveRecipeSuccess received - setting DialogResult = true");
+
+            DialogResult = true; // Stänger fönstret
         }
     }
 }

@@ -2,6 +2,7 @@
 using CookMaster.MVVM;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -94,13 +95,6 @@ namespace CookMaster.Managers
         {
             return _loggedIn;
         }
-
-
-
-        ////Implementera INotifyPropertyChanged
-        //public event PropertyChangedEventHandler? PropertyChanged;
-        //private void OnPropertyChanged(string v) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(v));
-        
     }
 }
 

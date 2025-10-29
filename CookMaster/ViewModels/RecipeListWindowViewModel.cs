@@ -64,6 +64,11 @@ namespace CookMaster.ViewModels
         //Expose current loggedin user
         public User? CurrentUser => UserManager?.GetLoggedin();
 
+        public RecipeListWindowViewModel()
+        {
+
+        }
+
         public RecipeListWindowViewModel(UserManager userManager, RecipeManager recipeManager)
         {
             UserManager = userManager;
@@ -197,7 +202,21 @@ namespace CookMaster.ViewModels
             main?.Show();
         }
         public void RemoveRecipe() { }
-        public void AboutCookMaster() { }
+        public void AboutCookMaster() 
+        {
+            var aboutWindow = new AboutWindow();
+            var main = Application.Current.MainWindow;
+            if (main != null)
+            {
+                aboutWindow.Owner = main;
+                main.Hide();
+            }
+
+            var result = aboutWindow.ShowDialog();
+
+            // Visa recipelistwindow oavsett hur det går
+            main?.Show();
+        }
         public void GetUserInfo() { UserManager?.GetLoggedin(); }
         public bool CanAdd() => true;
         public bool CanDo()

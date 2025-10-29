@@ -30,7 +30,7 @@ namespace CookMaster
                 DialogResult = true;
                 Hide();
             };
-            DataContext = mainWindowVM;
+            //DataContext = mainWindowVM;
         }
 
         private void Pwd_PasswordChanged(object sender, RoutedEventArgs e)

@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CookMaster.Views" xmlns:viewmodels="clr-namespace:CookMaster.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:RecipeListWindowViewModel}"
+        xmlns:local="clr-namespace:CookMaster.Views"
+        xmlns:viewmodels="clr-namespace:CookMaster.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:RecipeListWindowViewModel, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
         Title="Recipe List" Height="450" Width="800">
     <StackPanel>
@@ -67,7 +69,6 @@
                     <Button
                         Command="{Binding GetRecipeDetailsCommand}"
                         Content="Receptdetaljer"
-                        Click="Receptdetaljer_Click"
                         Margin="5,20,5,5"/>
                     <Button
                         Command="{Binding RemoveRecipeCommand}"

@@ -23,7 +23,6 @@ namespace CookMaster.Managers
             Recipes = new ObservableCollection<Recipe>();
             SeedDefaultRecipes(user);
             userManager.LoggedIn.MyRecipeList = Recipes;
-
         }
         
         // Tom konstruktor behövs för att få bort varning i App.xaml

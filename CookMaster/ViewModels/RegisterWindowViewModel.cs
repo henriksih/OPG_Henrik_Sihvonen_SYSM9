@@ -78,16 +78,5 @@ namespace CookMaster.ViewModels
             // Berätta att registreringen var framgångsrik
             OnRegisterSuccess?.Invoke(this, EventArgs.Empty);
         }
-
-        //public event PropertyChangedEventHandler? PropertyChanged;
-
-        //private void OnPropertyChanged([CallerMemberName] string name = null)
-        //{
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        //}
-
-
-
-
     }
 }

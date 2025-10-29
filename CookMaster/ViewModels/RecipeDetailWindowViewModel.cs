@@ -70,6 +70,14 @@ namespace CookMaster.ViewModels
 
         public User? CurrentUser => UserManager?.GetLoggedin();
 
+        private bool _isEditing;
+        public bool IsEditing
+        {
+            get => _isEditing;
+            private set { _isEditing = value; OnPropertyChanged(); }
+        }
+
+
         public event EventHandler? OnSaveRecipeSuccess;
 
         //Konstruktorer
@@ -77,6 +85,10 @@ namespace CookMaster.ViewModels
         {
             RecipeManager = recipeManager;
             UserManager = userManager;
+            
+            EditRecipeCommand = new RelayCommand(_ => BeginEdit(), _ => !IsEditing);
+            SaveRecipeCommand = new RelayCommand(_ => SaveRecipe(), _ => IsEditing);
+            CancelEditCommand = new RelayCommand(_ => CancelEdit(), _ => IsEditing);
         }
 
         public RecipeDetailWindowViewModel(UserManager userManager, RecipeManager recipeManager, Recipe selectedRecipe)
@@ -96,27 +108,54 @@ namespace CookMaster.ViewModels
             Category = SelectedRecipe.Category;
             Date = SelectedRecipe.Date ?? default;
             CreatedBy = SelectedRecipe.CreatedBy;
+            IsEditing = false;
         }
 
+
+        private void BeginEdit()
+        {
+            IsEditing = true;
+            // Kommandon som är beroende av om IsEditing är true
+            (EditRecipeCommand as RelayCommand)?.RaiseCanExecuteChanged();
+            (SaveRecipeCommand as RelayCommand)?.RaiseCanExecuteChanged();
+            (CancelEditCommand as RelayCommand)?.RaiseCanExecuteChanged();
+        }
         public ICommand EditRecipeCommand { get; }
 
         public ICommand SaveRecipeCommand { get; }
+        public ICommand CancelEditCommand { get; }
 
         public void SaveRecipe()
         {
-            if (SelectedRecipe != null)
-            {
-                SelectedRecipe.Title = Title;
-                SelectedRecipe.Ingredients = Ingredients;
-                SelectedRecipe.Instructions = Instructions;
-                SelectedRecipe.Category = Category;
-                SelectedRecipe.Date = Date;
-                SelectedRecipe.CreatedBy = CreatedBy;
-                RecipeManager.UpdateRecipe(Title, Ingredients, Instructions, Category, Date, CreatedBy);
-            }
+            System.Diagnostics.Debug.WriteLine($"SaveRecipe called, SelectedRecipe={(SelectedRecipe?.Title ?? "<null>")}");
+            if (SelectedRecipe == null) return;
+            
+            SelectedRecipe.Title = Title;
+            SelectedRecipe.Ingredients = Ingredients;
+            SelectedRecipe.Instructions = Instructions;
+            SelectedRecipe.Category = Category;
+            SelectedRecipe.Date = Date;
+            SelectedRecipe.CreatedBy = CreatedBy;
+            //RecipeManager.UpdateRecipe(Title, Ingredients, Instructions, Category, Date, CreatedBy);
+
+            IsEditing = false;
+            (EditRecipeCommand as RelayCommand)?.RaiseCanExecuteChanged();
+            (SaveRecipeCommand as RelayCommand)?.RaiseCanExecuteChanged();
+            (CancelEditCommand as RelayCommand)?.RaiseCanExecuteChanged();
+
+            System.Diagnostics.Debug.WriteLine("Raising OnSaveRecipeSuccess");
 
             // Berätta att registreringen var framgångsrik
             OnSaveRecipeSuccess?.Invoke(this, EventArgs.Empty);
+        }
+
+                private void CancelEdit()
+        {
+            // Revert properties from the model
+            CopySelectedToProperties();
+            (EditRecipeCommand as RelayCommand)?.RaiseCanExecuteChanged();
+            (SaveRecipeCommand as RelayCommand)?.RaiseCanExecuteChanged();
+            (CancelEditCommand as RelayCommand)?.RaiseCanExecuteChanged();
         }
 
 

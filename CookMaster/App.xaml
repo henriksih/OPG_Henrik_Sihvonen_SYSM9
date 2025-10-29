@@ -7,6 +7,6 @@
     <Application.Resources>
         <managers:UserManager x:Key="UserManager"/>
         <managers:RecipeManager x:Key="RecipeManager"/>
-
+        
     </Application.Resources>
 </Application>

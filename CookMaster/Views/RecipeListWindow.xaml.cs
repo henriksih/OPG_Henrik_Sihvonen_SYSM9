@@ -85,9 +85,9 @@ namespace CookMaster.Views
             vm.SelectedRecipe = null;
         }
 
-        private void Receptdetaljer_Click(object sender, RoutedEventArgs e)
-        {
-            (DataContext as RecipeListWindowViewModel)?.GetRecipe();
-        }
+        //private void Receptdetaljer_Click(object sender, RoutedEventArgs e)
+        //{
+        //    (DataContext as RecipeListWindowViewModel)?.GetRecipe();
+        //}
     }
 }
