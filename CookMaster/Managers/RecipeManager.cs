@@ -67,9 +67,17 @@ namespace CookMaster.Managers
 
         }
 
-        public void UpdateRecipe(string title, string ingredients, string instructions, string category, DateOnly date, string createdBy)
+        public void UpdateRecipe(Recipe existing, string title, string ingredients, string instructions, string category, DateOnly date, string createdBy)
         {
-            Recipes.Add(new Recipe(title, ingredients, instructions, category, date, createdBy));
+            //Recipes.Add(new Recipe(title, ingredients, instructions, category, date, createdBy));
+
+            if (existing == null) return;
+            existing.Title = title;
+            existing.Ingredients = ingredients;
+            existing.Instructions = instructions;
+            existing.Category = category;
+            existing.Date = date;
+            existing.CreatedBy = createdBy;
         }
 
 

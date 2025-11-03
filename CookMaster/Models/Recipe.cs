@@ -1,6 +1,8 @@
 ﻿using CookMaster.Managers;
+using CookMaster.MVVM;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -8,19 +10,80 @@ using System.Threading.Tasks;
 
 namespace CookMaster.Models
 {
-    public class Recipe
+    public class Recipe : ViewModelBase
     {
-        public string? Title { get; set; }
-        public string? Ingredients { get; set; }
-        public string? Instructions { get; set; }
+        private string? _title;
+        public string? Title
+        {
+            get => _title;
+            set
+            {
+                if (_title == value) return;
+                _title = value;
+                OnPropertyChanged(nameof(Title));
+            }
+        }
 
-        public string? Category { get; set; }
+        private string? _ingredients;
+        public string? Ingredients
+        {
+            get => _ingredients;
+            set
+            {
+                if (_ingredients == value) return;
+                _ingredients = value;
+                OnPropertyChanged(nameof(Ingredients));
+            }
+        }
 
-        public DateOnly? Date { get; set; }
+        private string? _instructions;
+        public string? Instructions
+        {
+            get => _instructions;
+            set
+            {
+                if (_instructions == value) return;
+                _instructions = value;
+                OnPropertyChanged(nameof(Instructions));
+            }
+        }
 
-        public string? CreatedBy { get; set; }
+        private string? _category;
+        public string? Category
+        {
+            get => _category;
+            set
+            {
+                if (_category == value) return;
+                _category = value;
+                OnPropertyChanged(nameof(Category));
+            }
+        }
 
-        //private readonly UserManager? _userManager;
+        private DateOnly? _date;
+        public DateOnly? Date
+        {
+            get => _date;
+            set
+            {
+                if (_date == value) return;
+                _date = value;
+                OnPropertyChanged(nameof(Date));
+            }
+        }
+
+        private string? _createdBy;
+        public string? CreatedBy
+        {
+            get => _createdBy;
+            set
+            {
+                if (_createdBy == value) return;
+                _createdBy = value;
+                OnPropertyChanged(nameof(CreatedBy));
+            }
+        }
+
 
         //Konstuktor
 
@@ -34,6 +97,4 @@ namespace CookMaster.Models
             CreatedBy = createdBy;
         }
     }
-
-
 }

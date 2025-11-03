@@ -26,7 +26,6 @@
                         Text="Användare:" 
                         Margin="5"/>
                     <TextBlock
-                         
                         Width="100"
                         Text="{Binding UserManager.LoggedIn.Username}" 
                         Margin="5"/>
@@ -54,11 +53,19 @@
                     <TextBlock 
                         Text="Receptlista" 
                         Margin="5"/>
-                    <ListBox
+                    <ListBox ItemsSource="{Binding RecipesView}"
+                             SelectedItem="{Binding SelectedRecipe, Mode=TwoWay}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Title}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <!--<ListBox
                         DisplayMemberPath="Title"
                         Margin="5"
-                        ItemsSource="{Binding RecipesView}"
-                        SelectedItem="{Binding SelectedRecipe, Mode=TwoWay}"/>
+                        ItemsSource="{Binding RecipesView, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedItem="{Binding SelectedRecipe, Mode=TwoWay}"/>-->
                 </StackPanel>
 
                 <StackPanel Grid.Column="1">

@@ -1,4 +1,5 @@
 ﻿using CookMaster.Managers;
+using CookMaster.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CookMaster.Models
 {
-    public class User
+    public class User : ViewModelBase
     {
         public string? Username { get; set; }
         public string? Password { get; set; }
