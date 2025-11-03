@@ -41,9 +41,7 @@ namespace CookMaster.Views
                 }
                 
             };
-
             //DataContext = aboutWindowVM;
-
         }
     }
 }

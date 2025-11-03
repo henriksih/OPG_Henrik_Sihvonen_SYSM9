@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CookMaster.Managers;
+using CookMaster.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,22 @@ namespace CookMaster.Views
         public UserInfoWindow()
         {
             InitializeComponent();
+            var userInfoWindowVM = new UserInfoWindowViewModel();
+            DataContext = userInfoWindowVM;
+
+            // prenumerera på om knappen Stäng är tryckt på
+            userInfoWindowVM.IfClosed += (s, e) =>
+            {
+                try
+                {
+                    // Och om så blir DialogResult sant
+                    this.DialogResult = true;
+                }
+                catch (InvalidOperationException)
+                {
+                    this.Close();
+                }
+            };
         }
     }
 }

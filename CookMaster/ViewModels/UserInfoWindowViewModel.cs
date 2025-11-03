@@ -47,5 +47,17 @@ namespace CookMaster.ViewModels
             }
         }
 
+        public UserInfoWindowViewModel()
+        {
+            CancelCommand = new RelayCommand(execute => Close());
+        }
+
+        public ICommand? CancelCommand { get; }
+
+        public event EventHandler? IfClosed;
+        public void Close()
+        {
+            IfClosed?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

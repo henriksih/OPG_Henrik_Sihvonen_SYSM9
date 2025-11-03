@@ -88,13 +88,19 @@ namespace CookMaster.ViewModels
             
             EditRecipeCommand = new RelayCommand(_ => BeginEdit(), _ => !IsEditing);
             SaveRecipeCommand = new RelayCommand(_ => SaveRecipe(), _ => IsEditing);
-            CancelEditCommand = new RelayCommand(_ => CancelEdit(), _ => IsEditing);
+            CancelEditCommand = new RelayCommand(_ => CancelEdit());
         }
 
         public RecipeDetailWindowViewModel(UserManager userManager, RecipeManager recipeManager, Recipe selectedRecipe)
             : this(userManager, recipeManager)
         {
             SelectedRecipe = selectedRecipe;
+            RecipeManager = recipeManager;
+            UserManager = userManager;
+
+            EditRecipeCommand = new RelayCommand(_ => BeginEdit(), _ => !IsEditing);
+            SaveRecipeCommand = new RelayCommand(_ => SaveRecipe(), _ => IsEditing);
+            CancelEditCommand = new RelayCommand(_ => CancelEdit());
         }
 
 
@@ -118,7 +124,7 @@ namespace CookMaster.ViewModels
             // Kommandon som är beroende av om IsEditing är true
             (EditRecipeCommand as RelayCommand)?.RaiseCanExecuteChanged();
             (SaveRecipeCommand as RelayCommand)?.RaiseCanExecuteChanged();
-            (CancelEditCommand as RelayCommand)?.RaiseCanExecuteChanged();
+            //(CancelEditCommand as RelayCommand)?.RaiseCanExecuteChanged();
         }
         public ICommand EditRecipeCommand { get; }
 
@@ -149,19 +155,18 @@ namespace CookMaster.ViewModels
             OnSaveRecipeSuccess?.Invoke(this, EventArgs.Empty);
         }
 
-                private void CancelEdit()
+
+
+        private void CancelEdit()
         {
             // Revert properties from the model
             CopySelectedToProperties();
             (EditRecipeCommand as RelayCommand)?.RaiseCanExecuteChanged();
             (SaveRecipeCommand as RelayCommand)?.RaiseCanExecuteChanged();
             (CancelEditCommand as RelayCommand)?.RaiseCanExecuteChanged();
+            IfClosed?.Invoke(this, EventArgs.Empty);
         }
 
-
-
-
+        public event EventHandler? IfClosed;
     }
-
-
 }

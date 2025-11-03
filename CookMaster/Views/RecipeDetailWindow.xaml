@@ -41,7 +41,7 @@
         <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal">
             <Button Width="200" Content="Editera receptet" Command="{Binding EditRecipeCommand}" Grid.Column="1" Grid.Row="6" Margin="5"/>
             <Button Width="200" Content="Spara receptet" Command="{Binding SaveRecipeCommand }" Grid.Column="1" Grid.Row="6" Margin="5" IsEnabled="{Binding IsEditing}"/>
-            <Button Width="200" Content="Avbryt" Command="{Binding CancelEditCommand}" Margin="5" IsEnabled="{Binding IsEditing}"/>
+            <Button Width="200" Content="Avbryt" Command="{Binding CancelEditCommand}" Margin="5"/>
         </StackPanel>
         
     </Grid>
