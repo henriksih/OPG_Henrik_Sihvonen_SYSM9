@@ -1,4 +1,5 @@
 ﻿using CookMaster.Managers;
+using CookMaster.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Windows.Input;
 
 namespace CookMaster.ViewModels
 {
-    internal class UserInfoWindowViewModel
+    internal class UserInfoWindowViewModel : ViewModelBase
     {
         public UserManager? UserManager { get; }
 

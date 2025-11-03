@@ -209,15 +209,28 @@ namespace CookMaster.ViewModels
             if (main != null)
             {
                 aboutWindow.Owner = main;
-                main.Hide();
+                //main.Hide();
             }
 
             var result = aboutWindow.ShowDialog();
 
             // Visa recipelistwindow oavsett hur det går
-            main?.Show();
+            //main?.Show();
         }
-        public void GetUserInfo() { UserManager?.GetLoggedin(); }
+        public void GetUserInfo() 
+        { 
+            UserManager?.GetLoggedin();
+
+            var userInfoWindow = new UserInfoWindow();
+            var main = Application.Current.MainWindow;
+            if (main != null)
+            {
+                userInfoWindow.Owner = main;
+                //main.Hide();
+            }
+
+            var result = userInfoWindow.ShowDialog();
+        }
         public bool CanAdd() => true;
         public bool CanDo()
         {
