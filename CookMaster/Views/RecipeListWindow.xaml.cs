@@ -54,7 +54,23 @@ namespace CookMaster.Views
         public RecipeListWindow(UserManager userManager, RecipeManager recipeManager)
         {
             InitializeComponent();
-            DataContext = new RecipeListWindowViewModel(userManager, recipeManager);
+            //DataContext = new RecipeListWindowViewModel(userManager, recipeManager);
+            var vm = new RecipeListWindowViewModel(userManager, recipeManager);
+            DataContext = vm;
+
+            // Samma view-handling som med den parameterlösa konstruktorn:
+            vm.RequestOpenRecipeDetail += (s, recipe) =>
+            {
+                if (recipe == null) return;
+                var detailWindow = new RecipeDetailWindow
+                {
+                    Owner = this,
+                    DataContext = new RecipeDetailWindowViewModel(vm.UserManager, vm.RecipeManager, recipe)
+                };
+                this.Hide();
+                detailWindow.ShowDialog();
+                this.Show();
+            };
         }
 
         private void Vm_PropertyChanged(object? sender, PropertyChangedEventArgs e)

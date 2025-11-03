@@ -98,41 +98,55 @@ namespace CookMaster.ViewModels
             // Skapa recipeListWindow med userManager och recipeManager
             var recipeListWindow = new RecipeListWindow(UserManager, recipeManager);
 
-            //var recipeListWindow = new RecipeListWindow();
-            var main = Application.Current.MainWindow;
-            if (main != null)
+            // Gamla lösningen:
+            //var main = Application.Current.MainWindow;
+            //if (main != null)
+            //{
+            //    recipeListWindow.Owner = main;
+            //    main.Hide();
+            //}
+
+            //var result = recipeListWindow.ShowDialog();
+
+            //if (result != true)
+            //    Application.Current.Shutdown();
+
+            // Göm loginfönstret om det syns
+            var oldMain = Application.Current?.MainWindow;
+            if (oldMain != null)
             {
-                recipeListWindow.Owner = main;
-                main.Hide();
+                recipeListWindow.Owner = oldMain; // Gör loginfönstret till förälder
+                oldMain.Hide();
             }
 
-            var result = recipeListWindow.ShowDialog();
+            // Gör recipeListWindow till nytt Mainfönster.
+            Application.Current.MainWindow = recipeListWindow;
+            recipeListWindow.Show();
 
-            if (result != true)
-                Application.Current.Shutdown();
+            // Ingen application.Current.Shutdown
         }
 
         public void ShowRegisterWindow()
         {
             var registerWindow = new RegisterWindow();
             //Göm MainWindow medan RegisterWindow är öppen
-            var main = Application.Current.MainWindow;
-            if(main != null)
+            var currentMain = Application.Current.MainWindow;
+            if(currentMain != null)
             {
-                registerWindow.Owner = main;
-                main.Hide();
+                registerWindow.Owner = currentMain;
+                currentMain.Hide();
             }
 
             var result = registerWindow.ShowDialog();
 
+            // Om null/false betrakta det som "cancel" — ta tillbaka föregående fönster.
             if (result != true)
             {
-                Application.Current.Shutdown();
+                currentMain?.Show();
                 return;
             }
-            //Om registreringen lyckades, dvs dialogen == true, visa MainWindow igen
-            main?.Show();
-            
+            //Om registreringen lyckades, visa MainWindow igen
+            currentMain?.Show();
         }
 
 

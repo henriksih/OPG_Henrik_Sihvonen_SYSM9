@@ -129,14 +129,14 @@ namespace CookMaster.ViewModels
 
             var result = addRecipeWindow.ShowDialog();
 
-            // If you expect the dialog to return true when recipe added:
+            // Visa recipeListWindow om sparningen inte går bra:
             if (result != true)
             {
                 recipeListWindow?.Show();
                 return;
             }
 
-            // underlying collection already updated by AddRecipeWindowViewModel
+            // Annars uppdatera listan och visa recipeListWindow igen
             _recipesView?.Refresh();
             recipeListWindow?.Show();
         }
@@ -174,32 +174,43 @@ namespace CookMaster.ViewModels
             ////Om registreringen lyckades, visa RecipeListWindow igen
             //main?.Show();
 
-            // Kontrollera att ett recept är valt
+            //Gamla implementationen nedan
+
+            //// Kontrollera att ett recept är valt
+            //if (SelectedRecipe == null) return;
+
+
+            //var recipeDetailWindow = new RecipeDetailWindow();
+            ////Göm RecipeListWindow medan RecipeDetailWindow är öppen
+            //var main = Application.Current.MainWindow;
+            //if (main != null)
+            //{
+            //    recipeDetailWindow.Owner = main;
+            //    main.Hide();
+            //}
+
+            //// Skapa ViewModel med det valda receptet och sätt som DataContext
+            //var vm = new RecipeDetailWindowViewModel(UserManager, RecipeManager, SelectedRecipe);
+            //recipeDetailWindow.DataContext = vm;
+
+            //var result = recipeDetailWindow.ShowDialog();
+
+            //if (result != true)
+            //{
+            //    //Application.Current.Shutdown();
+            //    main?.Show();
+            //    return;
+            //}
+            ////Om registreringen lyckades, visa RecipeListWindow igen
+            //main?.Show();
+
+            //Nya varianten:
+
+            // Säkerställ att ett recept är selekterat
             if (SelectedRecipe == null) return;
 
-
-            var recipeDetailWindow = new RecipeDetailWindow();
-            //Göm RecipeListWindow medan RecipeDetailWindow är öppen
-            var main = Application.Current.MainWindow;
-            if (main != null)
-            {
-                recipeDetailWindow.Owner = main;
-                main.Hide();
-            }
-
-            // Skapa ViewModel med det valda receptet och sätt som DataContext
-            var vm = new RecipeDetailWindowViewModel(UserManager, RecipeManager, SelectedRecipe);
-            recipeDetailWindow.DataContext = vm;
-
-            var result = recipeDetailWindow.ShowDialog();
-
-            if (result != true)
-            {
-                Application.Current.Shutdown();
-                return;
-            }
-            //Om registreringen lyckades, visa RecipeListWindow igen
-            main?.Show();
+            // Öppna ett RecipeDetailWindow för det valda receptet
+            RequestOpenRecipeDetail?.Invoke(this, SelectedRecipe);
         }
         public void RemoveRecipe() { }
         public void AboutCookMaster() 
