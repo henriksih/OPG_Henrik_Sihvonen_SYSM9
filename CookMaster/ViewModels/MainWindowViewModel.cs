@@ -95,6 +95,9 @@ namespace CookMaster.ViewModels
             // Skapa RecipeManager nu när vi har en logged-in user
             var recipeManager = new RecipeManager(UserManager, loggedIn);
 
+            // Gör RecipeManager tillgänglig överallt, så inte en annan används
+            Application.Current.Resources["RecipeManager"] = recipeManager;
+
             // Skapa recipeListWindow med userManager och recipeManager
             var recipeListWindow = new RecipeListWindow(UserManager, recipeManager);
 

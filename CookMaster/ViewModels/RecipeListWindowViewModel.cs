@@ -74,10 +74,20 @@ namespace CookMaster.ViewModels
             UserManager = userManager;
             RecipeManager = recipeManager;
 
-            // Create a view over the shared collection (guard null)
+            // Skapa en gemensam lista först
             var source = RecipeManager?.Recipes ?? new ObservableCollection<Recipe>();
             _recipesView = CollectionViewSource.GetDefaultView(source);
             _recipesView.Filter = FilterByLoggedInUser;
+
+            // Se till att receptlistan uppdateras när recept läggs till
+            if (RecipeManager?.Recipes != null)
+            {
+                RecipeManager.Recipes.CollectionChanged += (s, e) =>
+                {
+                    //Filtret sätts igen och uppdaterar UI
+                    _recipesView?.Refresh();
+                };
+            }
 
             // Refresh the view when logged-in user changes
             if (UserManager != null)

@@ -51,7 +51,7 @@ namespace CookMaster.ViewModels
             set { _category = value; OnPropertyChanged(); }
         }
 
-        private DateOnly _date;
+        private DateOnly _date = DateOnly.FromDateTime(DateTime.Today);
         public DateOnly Date
         {
             get => _date;

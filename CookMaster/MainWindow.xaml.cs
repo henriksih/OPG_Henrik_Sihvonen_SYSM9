@@ -22,6 +22,7 @@ namespace CookMaster
         {
             InitializeComponent();
             var userManager = (UserManager)Application.Current.Resources["UserManager"];
+            var recipeManager = (RecipeManager?)Application.Current.Resources["RecipeManager"];
             var mainWindowVM = new MainWindowViewModel(userManager);
             DataContext = mainWindowVM;
 
@@ -30,7 +31,7 @@ namespace CookMaster
                 DialogResult = true;
                 Hide();
             };
-            //DataContext = mainWindowVM;
+            DataContext = mainWindowVM;
         }
 
         private void Pwd_PasswordChanged(object sender, RoutedEventArgs e)
