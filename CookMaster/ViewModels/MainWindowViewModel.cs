@@ -67,6 +67,8 @@ namespace CookMaster.ViewModels
         {
             if (UserManager.Login(Username, Password))
             {
+                Username = "";
+                Password = "";
                 ShowRecipeListWindow();
             }
                 //    Om inloggningen lyckas:

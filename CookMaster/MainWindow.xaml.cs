@@ -25,9 +25,11 @@ namespace CookMaster
             var recipeManager = (RecipeManager?)Application.Current.Resources["RecipeManager"];
             var mainWindowVM = new MainWindowViewModel(userManager);
             DataContext = mainWindowVM;
-
+            
             mainWindowVM.OnLoginSuccess += (s, e) =>
             {
+                mainWindowVM.Password = string.Empty;
+                Pwd.Password = "";
                 DialogResult = true;
                 Hide();
             };
@@ -40,6 +42,7 @@ namespace CookMaster
             {
                 vm.Password = Pwd.Password;
             }
+            
         }
 
 

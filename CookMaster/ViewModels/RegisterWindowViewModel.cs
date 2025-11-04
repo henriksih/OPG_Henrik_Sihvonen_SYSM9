@@ -20,7 +20,7 @@ namespace CookMaster.ViewModels
         private string _username;
         private string _password;
         private string _country;
-        private List<string> _countries;
+        private ObservableCollection<string> _countries;
         private string _error;
 
         public string Username
@@ -41,7 +41,7 @@ namespace CookMaster.ViewModels
             set { _country = value; OnPropertyChanged(); CommandManager.InvalidateRequerySuggested(); }
         }
 
-        public List<string> Countries
+        public ObservableCollection<string> Countries
         {
             get => _countries;
             set
@@ -68,7 +68,7 @@ namespace CookMaster.ViewModels
         {
             UserManager = userManager;
             RegisterCommand = new RelayCommand(execute => Register(), canExecute => CanRegister());
-            _countries = new List<string> { "Sverige", "Norge", "Danmark" };
+            Countries = new ObservableCollection<string> { "Sverige", "Norge", "Danmark" };
         }
 
         private void Register()

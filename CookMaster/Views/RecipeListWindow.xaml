@@ -81,6 +81,10 @@
                         Command="{Binding RemoveRecipeCommand}"
                         Content="Ta bort recept" 
                         Margin="5,20,5,5"/>
+                    <Button
+                        Command="{Binding LogOutCommand}"
+                        Content="Logga ut" 
+                        Margin="5,20,5,5"/>
                 </StackPanel>
             </Grid>
         </Grid>

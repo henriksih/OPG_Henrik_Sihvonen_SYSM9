@@ -34,9 +34,6 @@ namespace CookMaster.Views
                 // Och om så blir DialogResult sant
                 this.DialogResult = true;
             };
-
-            DataContext = registerWindowVM;
-
         }
     }
 }

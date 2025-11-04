@@ -100,6 +100,7 @@ namespace CookMaster.ViewModels
             RemoveRecipeCommand = new RelayCommand(execute => RemoveRecipe(), canExecute => CanDo());
             AboutCookMasterCommand = new RelayCommand(execute => AboutCookMaster(), canExecute => CanAdd());
             GetUserInfoCommand = new RelayCommand(execute => GetUserInfo(), canExecute => CanAdd());
+            LogOutCommand = new RelayCommand(execute => LogOut(), canExecute => true);
         }
 
         private bool FilterByLoggedInUser(object item)
@@ -125,7 +126,11 @@ namespace CookMaster.ViewModels
         public ICommand RemoveRecipeCommand { get; }
         public ICommand AboutCookMasterCommand { get; }
         public ICommand GetUserInfoCommand { get; }
-        
+        public ICommand LogOutCommand { get; }
+
+        // Event triggas när VM vill 
+        //public event EventHandler? RequestLogout;
+
 
         public void AddRecipe()
         {
@@ -251,6 +256,48 @@ namespace CookMaster.ViewModels
             }
 
             var result = userInfoWindow.ShowDialog();
+        }
+
+        public void LogOut()
+        {
+            UserManager?.Logout();
+           
+            var current = Application.Current.MainWindow;
+            if (current == null)
+            {
+                //Skapa ett mainWindow om det inte finns
+                var fallback = new MainWindow();
+                // ensure the new main's VM password is cleared
+                if (fallback.DataContext is MainWindowViewModel fallbackVm)
+                    fallbackVm.Password = string.Empty;
+                Application.Current.MainWindow = fallback;
+                fallback.Show();
+                return;
+            }
+
+            var owner = current.Owner;
+            if (owner != null)
+            {
+                // Clear password on the original MainWindow's VM before showing it
+                if (owner.DataContext is MainWindowViewModel ownerVm)
+                    ownerVm.Password = string.Empty;
+                // Gör MainWindow till Owner, visa det och stäng RecipeListWindow
+                Application.Current.MainWindow = owner;
+                owner.Show();
+                current.Close();
+            }
+            else
+            {
+                // Om ingen owner finns, skapa och visa ett nytt MainWindow
+                var newMain = new MainWindow();
+                // ensure the new main's VM password is cleared
+                if (newMain.DataContext is MainWindowViewModel newMainVm)
+                    newMainVm.Password = string.Empty;
+
+                Application.Current.MainWindow = newMain;
+                newMain.Show();
+                current.Close();
+            }
         }
         public bool CanAdd() => true;
         public bool CanDo()
