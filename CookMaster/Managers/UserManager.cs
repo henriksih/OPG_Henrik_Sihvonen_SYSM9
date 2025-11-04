@@ -1,12 +1,5 @@
 ﻿using CookMaster.Models;
 using CookMaster.MVVM;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CookMaster.Managers
 {
@@ -14,7 +7,7 @@ namespace CookMaster.Managers
     //Hantera users och samla i dem en lista skapa default och Admin usrar.
 
     {
-        
+
         private readonly List<User> _users = new List<User>();
 
         private User? _loggedIn;
@@ -24,8 +17,8 @@ namespace CookMaster.Managers
 
             private set
             {
-                _loggedIn = value; 
-                OnPropertyChanged(nameof(LoggedIn)); 
+                _loggedIn = value;
+                OnPropertyChanged(nameof(LoggedIn));
                 OnPropertyChanged(nameof(IsAuthenticated));
             }
         }
@@ -84,9 +77,10 @@ namespace CookMaster.Managers
 
         public User FindUser(string name)
         {
-            foreach(User u in _users)
+            foreach (User u in _users)
             {
-                if(u.Username == name)
+                //if (u.Username == name)
+                if (string.Equals(u.Username, name, StringComparison.OrdinalIgnoreCase))
                 {
                     return u;
                 }
@@ -106,4 +100,4 @@ namespace CookMaster.Managers
     }
 }
 
-    
+

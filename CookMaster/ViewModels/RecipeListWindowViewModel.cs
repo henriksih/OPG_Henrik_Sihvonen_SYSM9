@@ -2,10 +2,8 @@
 using CookMaster.Models;
 using CookMaster.MVVM;
 using CookMaster.Views;
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data.Common;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -95,8 +93,13 @@ namespace CookMaster.ViewModels
         {
             if (item is not Recipe r) return false;
             var logged = UserManager?.GetLoggedin();
-            if (logged == null) return false; // or return true to show all when no user
-            return string.Equals(r.CreatedBy, logged.Username, StringComparison.OrdinalIgnoreCase);
+
+            // Delegate business rule to RecipeManager
+            return RecipeManager?.IsVisibleTo(r, logged) ?? false;
+
+            //if (logged == null) return false; // or return true to show all when no user
+            //if (logged is CookMaster.Models.Admin) return true;
+            //return string.Equals(r.CreatedBy, logged.Username, StringComparison.OrdinalIgnoreCase);
         }
 
         private void UserManager_PropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -144,7 +147,7 @@ namespace CookMaster.ViewModels
             recipeListWindow?.Show();
         }
         public event EventHandler<Recipe?>? RequestOpenRecipeDetail;
-        public void GetRecipe() 
+        public void GetRecipe()
         {
             // Kontrollera att ett recept är valt
             //if (SelectedRecipe == null) return;
@@ -215,11 +218,11 @@ namespace CookMaster.ViewModels
             // Öppna ett RecipeDetailWindow för det valda receptet
             RequestOpenRecipeDetail?.Invoke(this, SelectedRecipe);
         }
-        public void RemoveRecipe() 
+        public void RemoveRecipe()
         {
             UserManager.LoggedIn.MyRecipeList.Remove(SelectedRecipe);
         }
-        public void AboutCookMaster() 
+        public void AboutCookMaster()
         {
             var aboutWindow = new AboutWindow();
             var main = Application.Current.MainWindow;
@@ -234,8 +237,8 @@ namespace CookMaster.ViewModels
             // Visa recipelistwindow oavsett hur det går
             //main?.Show();
         }
-        public void GetUserInfo() 
-        { 
+        public void GetUserInfo()
+        {
             UserManager?.GetLoggedin();
 
             var userInfoWindow = new UserInfoWindow();
@@ -252,7 +255,7 @@ namespace CookMaster.ViewModels
         public void LogOut()
         {
             UserManager?.Logout();
-           
+
             var current = Application.Current.MainWindow;
             if (current == null)
             {

@@ -1,14 +1,7 @@
 ﻿using CookMaster.Models;
 using CookMaster.MVVM;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CookMaster.Managers
 {
@@ -26,70 +19,78 @@ namespace CookMaster.Managers
             userManager = (UserManager)Application.Current.Resources["UserManager"];
             Recipes = new ObservableCollection<Recipe>();
             SeedDefaultRecipes();
-            //userManager.LoggedIn.MyRecipeList = Recipes;
         }
-        
-        // Tom konstruktor behövs för att få bort varning i App.xaml
-        //public RecipeManager()
-        //{
-        //    Recipes = new ObservableCollection<Recipe>();
-        //}
 
         private void SeedDefaultRecipes()
         {
-            Recipes.Add(new Recipe(
+            var creator = userManager?.FindUser("user")?.Username ?? "unknown";
+            Recipes?.Add(new Recipe(
                 "Spaghetti Carbonara",
                 "Spaghetti, Bacon, Lök, Äggula",
                 "Koka spaghettin och stek upp resten, servera med rå äggula på toppen",
                 "Middag",
                 new DateOnly(2025, 10, 20),
-                userManager.FindUser("user").Username));
+                creator));
         }
 
         public void AddRecipe(string title, string ingredients, string instructions, string category, DateOnly date, string createdBy)
         {
-            Recipes.Add(new Recipe(title, ingredients, instructions, category, date, createdBy));
-            userManager.LoggedIn.MyRecipeList = Recipes;
+            Recipes?.Add(new Recipe(title, ingredients, instructions, category, date, createdBy));
+            if (userManager?.LoggedIn != null)
+                userManager.LoggedIn.MyRecipeList = Recipes;
         }
 
-        public void RemoveRecipe(Recipe recipe)
+        public bool IsVisibleTo(Recipe recipe, User? user)
         {
-
+            if (recipe == null) return false;
+            if (user == null) return true; // show all if no user
+            // Admin users see everything
+            if (user is Admin) return true;
+            // Otherwise only show recipes created by that user
+            return string.Equals(recipe.CreatedBy, user.Username, StringComparison.OrdinalIgnoreCase);
         }
+        //public void RemoveRecipe(Recipe recipe)
+        //{
 
-        public ObservableCollection<Recipe>? GetAllRecipes()
-        {
-            return Recipes;
-        }
+        //}
 
-        public ObservableCollection<Recipe>? GetByUser(User user)
-        {
-            return Recipes;
-        }
+        //public ObservableCollection<Recipe>? GetAllRecipes()
+        //{
+        //    return Recipes;
+        //}
 
-        public void Filter(string criteria)
-        {
+        //public ObservableCollection<Recipe>? GetByUser(User user)
+        //{
+        //    if (Recipes == null) return null;
+        //    if (user == null) return new ObservableCollection<Recipe>(Recipes);
 
-        }
+        //    // Om usern är admin, ge tillgång till alla recept
+        //    if (user is Admin)
+        //    {
+        //        return Recipes;
+        //    }
 
-        public void UpdateRecipe(Recipe existing, string title, string ingredients, string instructions, string category, DateOnly date, string createdBy)
-        {
-            //Recipes.Add(new Recipe(title, ingredients, instructions, category, date, createdBy));
-
-            if (existing == null) return;
-            existing.Title = title;
-            existing.Ingredients = ingredients;
-            existing.Instructions = instructions;
-            existing.Category = category;
-            existing.Date = date;
-            existing.CreatedBy = createdBy;
-        }
+        //    var username = user.Username ?? string.Empty;
+        //    var filtered = Recipes.Where(r => string.Equals(r.CreatedBy, username, StringComparison.OrdinalIgnoreCase));
+        //    return new ObservableCollection<Recipe>(filtered);
+        //}
 
 
 
-        ////Implementera INotifyPropertyChanged
-        //public event PropertyChangedEventHandler? PropertyChanged;
-        //private void OnPropertyChanged(string v) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(v));
+        //public void Filter(string criteria)
+        //{
 
+        //}
+
+        //public void UpdateRecipe(Recipe existing, string title, string ingredients, string instructions, string category, DateOnly date, string createdBy)
+        //{
+        //    if (existing == null) return;
+        //    existing.Title = title;
+        //    existing.Ingredients = ingredients;
+        //    existing.Instructions = instructions;
+        //    existing.Category = category;
+        //    existing.Date = date;
+        //    existing.CreatedBy = createdBy;
+        //}
     }
 }

@@ -1,14 +1,6 @@
 ﻿using CookMaster.Managers;
 using CookMaster.Models;
 using CookMaster.MVVM;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace CookMaster.ViewModels
@@ -22,7 +14,9 @@ namespace CookMaster.ViewModels
         public Recipe? SelectedRecipe
         {
             get => _selectedRecipe;
-            set { _selectedRecipe = value; 
+            set
+            {
+                _selectedRecipe = value;
                 OnPropertyChanged();
                 CopySelectedToProperties();
             }
@@ -87,7 +81,7 @@ namespace CookMaster.ViewModels
         {
             RecipeManager = recipeManager;
             UserManager = userManager;
-            
+
             EditRecipeCommand = new RelayCommand(_ => BeginEdit(), _ => !IsEditing);
             SaveRecipeCommand = new RelayCommand(_ => SaveRecipe(), _ => IsEditing);
             CancelEditCommand = new RelayCommand(_ => CancelEdit());
@@ -137,7 +131,7 @@ namespace CookMaster.ViewModels
         {
             System.Diagnostics.Debug.WriteLine($"SaveRecipe called, SelectedRecipe={(SelectedRecipe?.Title ?? "<null>")}");
             if (SelectedRecipe == null) return;
-            
+
             SelectedRecipe.Title = Title;
             SelectedRecipe.Ingredients = Ingredients;
             SelectedRecipe.Instructions = Instructions;

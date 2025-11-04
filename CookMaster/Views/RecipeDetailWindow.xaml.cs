@@ -1,6 +1,4 @@
-﻿using CookMaster.Managers;
-using CookMaster.ViewModels;
-using System;
+﻿using CookMaster.ViewModels;
 using System.Windows;
 
 namespace CookMaster.Views
@@ -29,7 +27,7 @@ namespace CookMaster.Views
                 newVm.OnSaveRecipeSuccess += Vm_OnSaveRecipeSuccess;
                 newVm.IfClosed += Vm_IfClosed;
             }
-                
+
         }
 
         private void Vm_OnSaveRecipeSuccess(object? sender, EventArgs e)
@@ -42,7 +40,7 @@ namespace CookMaster.Views
         private void Vm_IfClosed(object? sender, EventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("Vm_IfClosed received - closing dialog (DialogResult = false)");
-            
+
             try
             {
                 DialogResult = false;

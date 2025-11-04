@@ -1,15 +1,6 @@
 ﻿using CookMaster.Managers;
 using CookMaster.ViewModels;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CookMaster
 {
@@ -25,7 +16,7 @@ namespace CookMaster
             //var recipeManager = (RecipeManager?)Application.Current.Resources["RecipeManager"];
             var mainWindowVM = new MainWindowViewModel();
             DataContext = mainWindowVM;
-            
+
             mainWindowVM.OnLoginSuccess += (s, e) =>
             {
                 mainWindowVM.Password = string.Empty;
@@ -42,7 +33,7 @@ namespace CookMaster
             {
                 vm.Password = Pwd.Password;
             }
-            
+
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CookMaster.Views"
         mc:Ignorable="d"
-        Title="Användarinformation" Height="450" Width="800">
+        Title="Användarinformation" Height="500" Width="800">
     <StackPanel>
         <TextBlock 
          Text="Användarnamn"
@@ -15,7 +15,8 @@
          TextAlignment="Center"
          Margin="5"/>
         <TextBox
-         Text="{Binding Username, Mode=TwoWay}"
+         x:Name="UsernameTextBox"
+         Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
          Height="30"
          Width="160"
          FontSize="20"
@@ -68,6 +69,7 @@
             <Button 
              Content="Spara"
              Command="{Binding SaveCommand}"
+             CommandParameter="{Binding Text, ElementName=UsernameTextBox}"
              Height="30"
              Width="160"
              FontSize="20"
@@ -82,5 +84,8 @@
              Margin="200,50,5,5"
              HorizontalAlignment="Center"/>
         </Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock Text="{Binding Error}" Foreground="Red" Margin="5"/>
+        </StackPanel>
     </StackPanel>
 </Window>

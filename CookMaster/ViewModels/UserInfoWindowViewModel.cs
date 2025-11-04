@@ -1,12 +1,9 @@
 ﻿using CookMaster.Managers;
 using CookMaster.MVVM;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Xml.Linq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CookMaster.ViewModels
 {
@@ -47,6 +44,12 @@ namespace CookMaster.ViewModels
                 OnPropertyChanged();
             }
         }
+        public string Error
+        {
+            get => _error;
+            set { _error = value; OnPropertyChanged(); }
+        }
+
 
         public UserInfoWindowViewModel(UserManager userManager)
         {
@@ -73,7 +76,7 @@ namespace CookMaster.ViewModels
                 }
             }
 
-            SaveCommand = new RelayCommand(_ => Save());
+            SaveCommand = new RelayCommand(_ => Save(Username));
             CancelCommand = new RelayCommand(execute => Close());
         }
         public ICommand? SaveCommand { get; }
@@ -85,19 +88,26 @@ namespace CookMaster.ViewModels
             IfClosed?.Invoke(this, EventArgs.Empty);
         }
 
-        public void Save()
+        public void Save(string name)
         {
             var logged = UserManager?.GetLoggedin();
             if (logged != null)
             {
-                // spara eventuella ändringar
-                logged.Username = Username;
-                logged.Password = Password;
-                logged.Country = Country;
+                if (UserManager?.FindUser(name) == null || UserManager?.FindUser(name) == logged)
+                {
+                    // spara eventuella ändringar
+                    logged.Username = Username;
+                    logged.Password = Password;
+                    logged.Country = Country;
+                    // Stäng fönstret
+                    IfClosed?.Invoke(this, EventArgs.Empty);
+                }
+                else
+                {
+                    Error = "Användarnamnet är redan taget";
+                }
             }
-
-            // Stäng fönstret
-            IfClosed?.Invoke(this, EventArgs.Empty);
+            
         }
     }
 }

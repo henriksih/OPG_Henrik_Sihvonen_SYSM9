@@ -61,11 +61,6 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <!--<ListBox
-                        DisplayMemberPath="Title"
-                        Margin="5"
-                        ItemsSource="{Binding RecipesView, UpdateSourceTrigger=PropertyChanged}"
-                        SelectedItem="{Binding SelectedRecipe, Mode=TwoWay}"/>-->
                 </StackPanel>
 
                 <StackPanel Grid.Column="1">

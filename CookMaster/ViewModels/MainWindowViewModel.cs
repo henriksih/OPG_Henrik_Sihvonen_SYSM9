@@ -1,16 +1,8 @@
 ﻿using CookMaster.Managers;
+using CookMaster.MVVM;
 using CookMaster.Views;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using CookMaster.MVVM;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CookMaster.ViewModels
 {
@@ -68,13 +60,9 @@ namespace CookMaster.ViewModels
             {
                 Username = "";
                 Password = "";
+                Error = string.Empty; // Rensa ev felmeddelande
                 ShowRecipeListWindow();
             }
-                //    Om inloggningen lyckas:
-                //    → "OnLoginSuccess" är ett event
-                //    → Invoke "talar" till alla som lyssnar på det eventet (i det här fallet: LoginWindow)
-                //    → (this, EventArgs.Empty) skickar med en referens till vem som skickade eventet + tomma eventdata
-                
             else
                 Error = "Fel användarnamn eller lösenord.";
         }
@@ -93,29 +81,9 @@ namespace CookMaster.ViewModels
                 Error = "No logged-in user found.";
                 return;
             }
-            // Skapa RecipeManager nu när vi har en logged-in user
-            //var recipeManager = new RecipeManager(UserManager, loggedIn);
-
-            //// Gör RecipeManager tillgänglig överallt, så inte en annan används
-            //Application.Current.Resources["RecipeManager"] = recipeManager;
-
-           
 
             // Skapa recipeListWindow med userManager och recipeManager
             var recipeListWindow = new RecipeListWindow(UserManager, recipeManager);
-
-            // Gamla lösningen:
-            //var main = Application.Current.MainWindow;
-            //if (main != null)
-            //{
-            //    recipeListWindow.Owner = main;
-            //    main.Hide();
-            //}
-
-            //var result = recipeListWindow.ShowDialog();
-
-            //if (result != true)
-            //    Application.Current.Shutdown();
 
             // Göm loginfönstret om det syns
             var oldMain = Application.Current?.MainWindow;
@@ -137,7 +105,7 @@ namespace CookMaster.ViewModels
             var registerWindow = new RegisterWindow();
             //Göm MainWindow medan RegisterWindow är öppen
             var currentMain = Application.Current.MainWindow;
-            if(currentMain != null)
+            if (currentMain != null)
             {
                 registerWindow.Owner = currentMain;
                 currentMain.Hide();
@@ -167,13 +135,5 @@ namespace CookMaster.ViewModels
             Application.Current.MainWindow = newMain;
             newMain.Show();
         }
-
-        //public event PropertyChangedEventHandler? PropertyChanged;
-
-        //private void OnPropertyChanged([CallerMemberName] string name = null)
-        //{
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        //}
-
     }
 }

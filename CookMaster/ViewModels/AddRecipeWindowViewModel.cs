@@ -1,12 +1,6 @@
 ﻿using CookMaster.Managers;
 using CookMaster.Models;
 using CookMaster.MVVM;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace CookMaster.ViewModels
@@ -106,7 +100,7 @@ namespace CookMaster.ViewModels
             && !string.IsNullOrWhiteSpace(Ingredients)
             && !string.IsNullOrWhiteSpace(Instructions)
             && !string.IsNullOrWhiteSpace(Category);
-            //&& !string.IsNullOrWhiteSpace(CreatedBy);
+        //&& !string.IsNullOrWhiteSpace(CreatedBy);
 
 
         public void AddRecipe()
