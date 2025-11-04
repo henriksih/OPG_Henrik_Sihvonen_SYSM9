@@ -1,6 +1,7 @@
 ﻿using CookMaster.Managers;
 using CookMaster.MVVM;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -20,8 +21,12 @@ namespace CookMaster.ViewModels
         public string Username
         {
             get => _username;
-            set { _username = value; OnPropertyChanged(); CommandManager.InvalidateRequerySuggested(); }
-        }
+            set { _username = value; 
+                OnPropertyChanged(); 
+                CommandManager.InvalidateRequerySuggested();
+                // ta bort felmeddelande medan man editerar
+                Error = string.Empty; }
+            }
 
         public string Password
         {
@@ -91,23 +96,60 @@ namespace CookMaster.ViewModels
         public void Save(string name)
         {
             var logged = UserManager?.GetLoggedin();
-            if (logged != null)
+            if (logged == null)
+                return;
+            
+            // Spara gamla usernamnet, så recepten kan föras över till det nya
+            var oldUsername = logged.Username ?? string.Empty;
+
+            //Validera att det finns ett användarnamn och att det är mer än 3 tecken långt
+            if (string.IsNullOrWhiteSpace(name) || name.Length < 4)
             {
-                if (UserManager?.FindUser(name) == null || UserManager?.FindUser(name) == logged)
+                Error = "Användarnamnet måste vara längre än 3 tecken";
+                return;
+            }
+
+            // tillåt att spara om username inte är använt, eller är samma som innan
+            var found = UserManager?.FindUser(name);
+            if (found != null && found != logged)
+            {
+                Error = "Användarnamnet är redan taget";
+                return;
+            }
+
+            try
+            {
+                // försök använda den globala RecipeManagern om den finns och har recept
+                if (Application.Current.Resources["RecipeManager"] is CookMaster.Managers.RecipeManager recipeManager
+                    && recipeManager.Recipes != null)
                 {
-                    // spara eventuella ändringar
-                    logged.Username = Username;
-                    logged.Password = Password;
-                    logged.Country = Country;
-                    // Stäng fönstret
-                    IfClosed?.Invoke(this, EventArgs.Empty);
-                }
-                else
-                {
-                    Error = "Användarnamnet är redan taget";
+                    foreach (var r in recipeManager.Recipes)
+                    {
+                        if (string.Equals(r.CreatedBy, oldUsername, StringComparison.OrdinalIgnoreCase))
+                        {
+                            r.CreatedBy = name;
+                        }
+                    }
+
+                    // Försäkra att logged userns recept pekar på den delade receptsamlingen
+                    logged.MyRecipeList = recipeManager.Recipes;
                 }
             }
+            catch
+            {
+                // Informera användaren om det inte gick att föra över recepten men usernamnet blev uppdaterat...
+                Error = "Kunde inte uppdatera receptägarskap — men kontot sparades.";
+            }
+
+            // spara eventuella ändringar
+            logged.Username = Username;
+            logged.Password = Password;
+            logged.Country = Country;
+
+            // Stäng fönstret
+            IfClosed?.Invoke(this, EventArgs.Empty);
             
         }
     }
 }
+
