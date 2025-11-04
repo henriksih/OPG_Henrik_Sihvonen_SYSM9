@@ -45,8 +45,15 @@ namespace CookMaster.Managers
             _users.Add(new User
             {
                 Username = "user",
-                Password = "password",
+                Password = "a", //"password",
                 Country = "Sweden",
+                MyRecipeList = new System.Collections.ObjectModel.ObservableCollection<Recipe>()
+            });
+            _users.Add(new Admin
+            {
+                Username = "admin",
+                Password = "a", //"password",
+                Country = "Norge",
                 MyRecipeList = new System.Collections.ObjectModel.ObservableCollection<Recipe>()
             });
         }
@@ -75,15 +82,16 @@ namespace CookMaster.Managers
             _users.Add(new User { Username = user, Password = password, Country = country });
         }
 
-        public void FindUser(string name)
+        public User FindUser(string name)
         {
             foreach(User u in _users)
             {
                 if(u.Username == name)
                 {
-                    return;
+                    return u;
                 }
             }
+            return null;
         }
 
         public void ChangePassword(string user, string password)

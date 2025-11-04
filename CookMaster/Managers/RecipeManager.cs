@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CookMaster.Managers
@@ -17,21 +18,24 @@ namespace CookMaster.Managers
 
         public RecipeManager? recipeManager;
 
+        public UserManager? userManager;
+
         //Konstruktor
-        public RecipeManager(UserManager userManager, User user)
+        public RecipeManager()
         {
+            userManager = (UserManager)Application.Current.Resources["UserManager"];
             Recipes = new ObservableCollection<Recipe>();
-            SeedDefaultRecipes(user);
-            userManager.LoggedIn.MyRecipeList = Recipes;
+            SeedDefaultRecipes();
+            //userManager.LoggedIn.MyRecipeList = Recipes;
         }
         
         // Tom konstruktor behövs för att få bort varning i App.xaml
-        public RecipeManager()
-        {
-            Recipes = new ObservableCollection<Recipe>();
-        }
+        //public RecipeManager()
+        //{
+        //    Recipes = new ObservableCollection<Recipe>();
+        //}
 
-        private void SeedDefaultRecipes(User user)
+        private void SeedDefaultRecipes()
         {
             Recipes.Add(new Recipe(
                 "Spaghetti Carbonara",
@@ -39,12 +43,13 @@ namespace CookMaster.Managers
                 "Koka spaghettin och stek upp resten, servera med rå äggula på toppen",
                 "Middag",
                 new DateOnly(2025, 10, 20),
-                user.Username));
+                userManager.FindUser("user").Username));
         }
 
         public void AddRecipe(string title, string ingredients, string instructions, string category, DateOnly date, string createdBy)
         {
             Recipes.Add(new Recipe(title, ingredients, instructions, category, date, createdBy));
+            userManager.LoggedIn.MyRecipeList = Recipes;
         }
 
         public void RemoveRecipe(Recipe recipe)

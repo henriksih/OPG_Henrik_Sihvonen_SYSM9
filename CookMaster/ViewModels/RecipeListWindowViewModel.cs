@@ -38,19 +38,7 @@ namespace CookMaster.ViewModels
                     }
 
                 }
-                //if (GetRecipeDetailsCommand is RelayCommand detailsCmd)
-                //    detailsCmd.RaiseCanExecuteChanged();
-                //if (RemoveRecipeCommand is RelayCommand removeCmd)
-                //    removeCmd.RaiseCanExecuteChanged();
             }
-
-            //get => _selectedRecipe;
-            //set {
-            //    if (_selectedRecipe == value) return;
-            //    _selectedRecipe = value;
-            //    OnPropertyChanged();
-            //    OnSelectedRecipeChanged();
-            //}
         }
 
         private void OnSelectedRecipeChanged()
@@ -227,7 +215,10 @@ namespace CookMaster.ViewModels
             // Öppna ett RecipeDetailWindow för det valda receptet
             RequestOpenRecipeDetail?.Invoke(this, SelectedRecipe);
         }
-        public void RemoveRecipe() { }
+        public void RemoveRecipe() 
+        {
+            UserManager.LoggedIn.MyRecipeList.Remove(SelectedRecipe);
+        }
         public void AboutCookMaster() 
         {
             var aboutWindow = new AboutWindow();

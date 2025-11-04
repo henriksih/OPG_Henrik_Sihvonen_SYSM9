@@ -29,6 +29,7 @@
          TextAlignment="Center"
          Margin="5"/>
         <TextBox
+         Text="{Binding Password}"
          Height="30"
          Width="160"
          FontSize="20"
@@ -42,7 +43,7 @@
          TextAlignment="Center"
          Margin="5"/>
         <TextBox
-         Text="{Binding Password, Mode=OneWayToSource}"
+         Text="{Binding Password}"
          Height="30"
          Width="160"
          FontSize="20"
@@ -58,28 +59,28 @@
         <ComboBox
          ItemsSource="{Binding Countries}"
          SelectedItem="{Binding Country, Mode=TwoWay}"
-         Height="30"
+         Height="Auto"
          Width="160"
          FontSize="20"
          Margin="5"/>
+        
         <Grid >
             <Button 
-         Content="Spara"
-         Command="{Binding SaveCommand}"
-         Height="30"
-         Width="160"
-         FontSize="20"
-         Margin="5,50,200,5"
-         HorizontalAlignment="Center"/>
+             Content="Spara"
+             Command="{Binding SaveCommand}"
+             Height="30"
+             Width="160"
+             FontSize="20"
+             Margin="5,50,200,5"
+             HorizontalAlignment="Center"/>
             <Button 
-         Content="Avbryt"
-         Command="{Binding CancelCommand}"
-         Height="30"
-         Width="160"
-         FontSize="20"
-         Margin="200,50,5,5"
-         HorizontalAlignment="Center"/>
-
+             Content="Avbryt"
+             Command="{Binding CancelCommand}"
+             Height="30"
+             Width="160"
+             FontSize="20"
+             Margin="200,50,5,5"
+             HorizontalAlignment="Center"/>
         </Grid>
     </StackPanel>
 </Window>

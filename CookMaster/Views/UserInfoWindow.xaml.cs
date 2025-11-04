@@ -24,7 +24,8 @@ namespace CookMaster.Views
         public UserInfoWindow()
         {
             InitializeComponent();
-            var userInfoWindowVM = new UserInfoWindowViewModel();
+            var userManager = (UserManager)Application.Current.Resources["UserManager"];
+            var userInfoWindowVM = new UserInfoWindowViewModel(userManager);
             DataContext = userInfoWindowVM;
 
             // prenumerera på om knappen Stäng är tryckt på

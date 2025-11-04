@@ -22,8 +22,8 @@ namespace CookMaster
         {
             InitializeComponent();
             var userManager = (UserManager)Application.Current.Resources["UserManager"];
-            var recipeManager = (RecipeManager?)Application.Current.Resources["RecipeManager"];
-            var mainWindowVM = new MainWindowViewModel(userManager);
+            //var recipeManager = (RecipeManager?)Application.Current.Resources["RecipeManager"];
+            var mainWindowVM = new MainWindowViewModel();
             DataContext = mainWindowVM;
             
             mainWindowVM.OnLoginSuccess += (s, e) =>
@@ -44,11 +44,5 @@ namespace CookMaster
             }
             
         }
-
-
-        //private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-
-        //}
     }
 }

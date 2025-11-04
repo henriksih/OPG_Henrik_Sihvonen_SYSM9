@@ -18,6 +18,8 @@ namespace CookMaster.ViewModels
     {
         public UserManager? UserManager { get; }
 
+        public RecipeManager recipeManager { get; }
+
         private string _username;
         private string _password;
         private string _error;
@@ -46,14 +48,11 @@ namespace CookMaster.ViewModels
         public ICommand? RegisterCommand { get; }
 
 
-        public MainWindowViewModel(UserManager userManager)
+        public MainWindowViewModel()
         {
-            UserManager = userManager;
+            UserManager = (UserManager)Application.Current.Resources["UserManager"];
+            recipeManager = (RecipeManager)Application.Current.Resources["RecipeManager"];
 
-            //if (!UserManager.IsAuthenticated)
-            //{
-            //    ShowRecipeListWindow();
-            //}
             LoginCommand = new RelayCommand(execute => Login(), canExecute => CanLogin());
             LogoutCommand = new RelayCommand(execute => Logout(), canExecute => UserManager.IsAuthenticated);
             RegisterCommand = new RelayCommand(execute => ShowRegisterWindow());
@@ -95,10 +94,12 @@ namespace CookMaster.ViewModels
                 return;
             }
             // Skapa RecipeManager nu när vi har en logged-in user
-            var recipeManager = new RecipeManager(UserManager, loggedIn);
+            //var recipeManager = new RecipeManager(UserManager, loggedIn);
 
-            // Gör RecipeManager tillgänglig överallt, så inte en annan används
-            Application.Current.Resources["RecipeManager"] = recipeManager;
+            //// Gör RecipeManager tillgänglig överallt, så inte en annan används
+            //Application.Current.Resources["RecipeManager"] = recipeManager;
+
+           
 
             // Skapa recipeListWindow med userManager och recipeManager
             var recipeListWindow = new RecipeListWindow(UserManager, recipeManager);
