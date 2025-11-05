@@ -1,0 +1,35 @@
+﻿Uppgiften har verkligen varit utmanande och i mitt tycke, kanske lite i överkant. Fram tills vi började med inlämningsuppgiften, har
+tempot varit högt, men ändå medgett en möjlighet att utveckla färdigheterna vi fått. Jag känner dock att vi efter att ha tittat på 
+wpf och övat med det, blev introduktionen av MVVM och Binding via Command väldigt snabbt genomgångna och vi fick inte riktigt chansen
+att öva och befästa kunskaperna tillräckligt.
+Det positiva är att vi faktiskt har fått skapa en 'riktig' applikation och man börjar förstå komplexiteten och vikten av struktur
+i programmeringen.
+
+Inledningsvis försökte jag följa den uppbyggnad som klassdiagrammet indikerade, men ganska snart blev det istället en fråga om
+att försöka lösa de olika utmaningarna som de kom. Eftersom det var svårt att veta hur implementationen skulle se ut innan jag 
+började med att implementera en fúnktion, blev det också svårt att göra saker i tur och ordning. Istället blev det ändringar 
+i en rad filer, vilket kändes ovant och lätt att tappa tråden. Vi (eller jag iaf) har heller inte använt mig mycket av AI tidigare
+och det gjorde det svårt att rätt förstå förslagen och implementera dem utan att skapa nya problem.
+Vad som kändes mest hemtamt var att skapa de olika fönsterna och kontrollerna däri. Det fanns ett par projekt tidigare som gav 
+ideer om hur man kunde fortsätta med implementeringen, men det var inte trivialt att efterlikna vad som fungerat i de tidigare
+projekten, med tanke på att de i huvudsak gjorts från katedern och vi inte testat på egen hand.
+
+Jag försökte fokusera på att ta en funktion i taget och implementerade login och användarhantering utan att alls titta på receptsidan.
+Jag skulle säga att det i huvudsak var en bra strategi som gjorde mig lite bättre förberedd på hur jag skulle tänka när det blev
+dags för recepthanteringen. I takt med att jag började förstå hur jag kunde använda AI för att komma vidare gick det lite bättre, 
+men tyvärr hamnade jag också mer i baksätet och det kändes som att följa med istället för att leda projektet. Jag inser dock att 
+framtidens yrkesliv definitivt kommer att innebära att AI hela tiden står till förfogande och att det snabbar på kodningen avsevärt.
+
+Ett avgörande problem var MVVM strukturen, som jag i teorin på ett övergripande sätt förstår hur den är tänkt att fungera och hur
+det hjälper att hålla isär de olika delarna av en applikation, i den mån det är möjligt. Min förståelse hjälpte dock inte riktigt
+att se hur det i detta fall skulle implementeras och när problemen hopade sig och tiden gick, blev det mer en fråga om att få till 
+funktionaliteten än att följa en struktur med väldigt vaga konturer.
+
+Jag tycker det blev lite för många nya aspekter och tekniker introducerade för att ersätta vad vi tidigare lärt på väldigt kort tid,
+men samtidigt har det inneburit många timmar av problemlösning som jag är övertygad om kommer att vara till stor nytta framöver.
+
+Kortfattat var det kul, intressant, svårt, frustrerande och i korta ögonblick väldigt givande och tillfredsställande!!
+
+
+
+
