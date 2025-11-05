@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Xml.Linq;
+using System.Text.RegularExpressions;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CookMaster.ViewModels
@@ -14,6 +15,7 @@ namespace CookMaster.ViewModels
 
         private string _username;
         private string _password;
+        private string _confirmPassword;
         private string _country;
         private ObservableCollection<string> _countries;
         private string _error;
@@ -32,6 +34,13 @@ namespace CookMaster.ViewModels
         {
             get => _password;
             set { _password = value; OnPropertyChanged(); CommandManager.InvalidateRequerySuggested(); }
+        }
+
+        // New confirm-password property — bind your second password input to this
+        public string ConfirmPassword
+        {
+            get => _confirmPassword;
+            set { _confirmPassword = value; OnPropertyChanged(); CommandManager.InvalidateRequerySuggested(); }
         }
 
         public string Country
@@ -69,6 +78,7 @@ namespace CookMaster.ViewModels
             {
                 Username = loggedUser.Username ?? string.Empty;
                 Password = loggedUser.Password ?? string.Empty;
+                ConfirmPassword = Password;
 
                 if (!string.IsNullOrEmpty(loggedUser.Country))
                 {
@@ -93,6 +103,25 @@ namespace CookMaster.ViewModels
             IfClosed?.Invoke(this, EventArgs.Empty);
         }
 
+        private static bool IsPasswordValid(string? pwd)
+        {
+            // Same rules as RegisterWindow:
+            // not empty, at least 8 chars, at least one digit and one special character
+            if (string.IsNullOrWhiteSpace(pwd))
+                return false;
+
+            if (pwd.Length < 8)
+                return false;
+
+            if (!Regex.IsMatch(pwd, @"\d"))
+                return false;
+
+            if (!Regex.IsMatch(pwd, @"[^A-Za-z0-9]"))
+                return false;
+
+            return true;
+        }
+
         public void Save(string name)
         {
             var logged = UserManager?.GetLoggedin();
@@ -114,6 +143,19 @@ namespace CookMaster.ViewModels
             if (found != null && found != logged)
             {
                 Error = "Användarnamnet är redan taget";
+                return;
+            }
+
+            // Validera lösen samma som i RegisterWindow: båda måste finnas, vara giltiga och matcha
+            if (!IsPasswordValid(Password))
+            {
+                Error = "Lösenordet måste vara minst 8 tecken, innehålla minst en siffra och ett specialtecken";
+                return;
+            }
+
+            if (!string.Equals(Password, ConfirmPassword, StringComparison.Ordinal))
+            {
+                Error = "Lösenorden matchar inte";
                 return;
             }
 
@@ -142,7 +184,8 @@ namespace CookMaster.ViewModels
             }
 
             // spara eventuella ändringar
-            logged.Username = Username;
+            logged.Username = name;
+            Username = name;
             logged.Password = Password;
             logged.Country = Country;
 

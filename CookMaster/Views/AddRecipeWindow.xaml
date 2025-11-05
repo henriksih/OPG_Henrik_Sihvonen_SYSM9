@@ -34,7 +34,20 @@
         <TextBox Text="{Binding Category, Mode=TwoWay}" Width="600" Grid.Column="1" Grid.Row="1" Margin="5"/>
         <TextBox Text="{Binding Ingredients, Mode=TwoWay}" Width="600" Grid.Column="1" Grid.Row="2" Margin="5"/>
         <TextBox Text="{Binding Instructions, Mode=TwoWay}" Width="600" Grid.Column="1" Grid.Row="3" Margin="5"/>
-        <DatePicker SelectedDate="{Binding Date, Mode=TwoWay, Converter={StaticResource DateOnlyConverter}, UpdateSourceTrigger=PropertyChanged}" Width="600" Grid.Column="1" Grid.Row="4" Margin="5"/>
+        <DatePicker 
+            SelectedDate="{Binding Date, Mode=TwoWay, Converter={StaticResource DateOnlyConverter}, UpdateSourceTrigger=PropertyChanged}" 
+            Width="600" 
+            Grid.Column="1" 
+            Grid.Row="4" 
+            Margin="5">
+            <DatePicker.Resources>
+                <Style TargetType="{x:Type DatePickerTextBox}">
+                    <Setter Property="IsReadOnly" Value="True"/>
+                    <Setter Property="Focusable" Value="False"/>
+                    <Setter Property="IsHitTestVisible" Value="False"/>
+                </Style>
+            </DatePicker.Resources>
+            </DatePicker>
         <TextBlock Text="{Binding CurrentUser.Username}" Width="600" Grid.Column="1" Grid.Row="5" Margin="5"/>
         <Button Width="200" Content="Lägg till receptet" Command="{Binding AddRecipeCommand}" Grid.Column="1" Grid.Row="6" Margin="5"/>
     </Grid>

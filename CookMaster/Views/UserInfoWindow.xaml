@@ -44,7 +44,7 @@
          TextAlignment="Center"
          Margin="5"/>
         <TextBox
-         Text="{Binding Password}"
+         Text="{Binding ConfirmPassword}"
          Height="30"
          Width="160"
          FontSize="20"

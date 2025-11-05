@@ -2,6 +2,7 @@
 using CookMaster.MVVM;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Text.RegularExpressions;
 
 namespace CookMaster.ViewModels
 {
@@ -11,6 +12,7 @@ namespace CookMaster.ViewModels
 
         private string _username;
         private string _password;
+        private string _confirmPassword;
         private string _country;
         private ObservableCollection<string> _countries;
         private string _error;
@@ -25,6 +27,12 @@ namespace CookMaster.ViewModels
         {
             get => _password;
             set { _password = value; OnPropertyChanged(); CommandManager.InvalidateRequerySuggested(); }
+        }
+
+        public string ConfirmPassword
+        {
+            get => _confirmPassword;
+            set { _confirmPassword = value; OnPropertyChanged(); CommandManager.InvalidateRequerySuggested(); }
         }
 
         public string Country
@@ -51,7 +59,14 @@ namespace CookMaster.ViewModels
 
         public ICommand? RegisterCommand { get; }
 
-        public bool CanRegister() => !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
+        // Kräv ett usernamn och giltigt passord för att kunna registrera
+        public bool CanRegister() =>
+            !string.IsNullOrWhiteSpace(Username);
+        
+
+            // Om man sätter kraven på lösen här får man inga felmeddelanden
+            //&& IsPasswordValid(Password)
+            //&& string.Equals(Password, ConfirmPassword, System.StringComparison.Ordinal);
 
         public event EventHandler? OnRegisterSuccess;
 
@@ -61,10 +76,62 @@ namespace CookMaster.ViewModels
             UserManager = userManager;
             RegisterCommand = new RelayCommand(execute => Register(Username), canExecute => CanRegister());
             Countries = new ObservableCollection<string> { "Sverige", "Norge", "Danmark" };
+            // initiera för att undvika null-värden
+            _password = string.Empty;
+            _confirmPassword = string.Empty;
+            _username = string.Empty;
+            _country = string.Empty;
+        }
+
+        private static bool IsPasswordValid(string? pwd)
+        {
+            //Lösenordsvalidering
+            // Inte tomt, minst 8 tecken, minst en siffra och ett specialtecken
+
+            if (string.IsNullOrWhiteSpace(pwd))
+                return false;
+
+            
+            if (pwd.Length < 8)
+                return false;
+
+            if (!Regex.IsMatch(pwd, @"\d"))
+                return false;
+
+            if (!Regex.IsMatch(pwd, @"[^A-Za-z0-9]"))
+                return false;
+
+            return true;
         }
 
         private void Register(string name)
         {
+            // validera att namn finns och är längre än 3 tecken
+            if (string.IsNullOrWhiteSpace(name) || name.Length < 4)
+            {
+                Error = "Användarnamn måste anges";
+                return;
+            }
+
+            if (!IsPasswordValid(Password))
+            {
+                Error = "Lösenordet måste vara minst 8 tecken, innehålla minst en siffra och en specialtecken";
+                return;
+            }
+
+            if (!string.Equals(Password, ConfirmPassword, System.StringComparison.Ordinal))
+            {
+                Error = "Lösenorden matchar inte";
+                return;
+            }
+
+            if (Country == "")
+            {
+                Error = "Du måste välja ett land";
+                return;
+            }
+
+            // checka att usernamnet inte redan finns
             if (UserManager != null)
             {
                 if (UserManager.FindUser(name) == null)

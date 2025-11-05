@@ -220,7 +220,37 @@ namespace CookMaster.ViewModels
         }
         public void RemoveRecipe()
         {
-            UserManager.LoggedIn.MyRecipeList.Remove(SelectedRecipe);
+            if (SelectedRecipe == null || UserManager == null)
+                return;
+
+            if (CurrentUser == null)
+                return;
+
+            if (CurrentUser is Admin admin && admin.IsAdmin)
+            {
+                // Ta bort från den sammanställda listan
+                if (RecipeManager?.Recipes != null && RecipeManager.Recipes.Contains(SelectedRecipe))
+                {
+                    RecipeManager.Recipes.Remove(SelectedRecipe);
+                }
+
+                // Uppdatera listan
+                _recipesView?.Refresh();
+                return;
+            }
+
+            //'Vanliga' users kan bara ta bort från sin egen lista
+            if (string.Equals(SelectedRecipe.CreatedBy, CurrentUser.Username, StringComparison.OrdinalIgnoreCase))
+            {
+                // Ta bort från den egna listan om möjligt
+                CurrentUser.MyRecipeList?.Remove(SelectedRecipe);
+                // Och även från den gemensamma...
+                RecipeManager?.Recipes?.Remove(SelectedRecipe);
+
+                // Uppdatera listan
+                _recipesView?.Refresh();
+                return;
+            }
         }
         public void AboutCookMaster()
         {

@@ -53,8 +53,24 @@
         </StackPanel>
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="3">
-            <Button Content="Login" Command="{Binding LoginCommand}" Height="30" Width="100" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5"/>
-            <Button Content="Register" Command="{Binding RegisterCommand}" Height="30" Width="100" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5"/>
+            <Button 
+                Content="Login" 
+                Command="{Binding LoginCommand}"
+                IsDefault="True"
+                Height="30" Width="100" 
+                FontSize="20" 
+                VerticalAlignment="Top" 
+                HorizontalAlignment="Right" 
+                Margin="5"/>
+            <Button 
+                Content="Register" 
+                Command="{Binding RegisterCommand}" 
+                Height="30" 
+                Width="100" 
+                FontSize="20" 
+                VerticalAlignment="Top" 
+                HorizontalAlignment="Center" 
+                Margin="5"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="4">

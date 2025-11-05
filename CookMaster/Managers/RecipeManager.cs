@@ -31,6 +31,14 @@ namespace CookMaster.Managers
                 "Middag",
                 new DateOnly(2025, 10, 20),
                 creator));
+            Recipes?.Add(new Recipe(
+               "Pizza Margherita",
+               "Mjöl, ägg, vatten, lök, tomat, ost",
+               "Rör ihop mjöl ägg och vatten och forma pizzan. Bryn löken lätt och i med tomat," +
+               " mixa och sprid på pizzan på med ost och grädda i ugn 15 min",
+               "Middag",
+               new DateOnly(2025, 10, 20),
+               creator));
         }
 
         public void AddRecipe(string title, string ingredients, string instructions, string category, DateOnly date, string createdBy)
