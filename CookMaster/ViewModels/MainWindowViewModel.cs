@@ -38,6 +38,7 @@ namespace CookMaster.ViewModels
         public ICommand LoginCommand { get; }
         public ICommand? LogoutCommand { get; }
         public ICommand? RegisterCommand { get; }
+        public ICommand? ForgotPasswordCommand { get; }
 
 
         public MainWindowViewModel()
@@ -48,11 +49,13 @@ namespace CookMaster.ViewModels
             LoginCommand = new RelayCommand(execute => Login(), canExecute => CanLogin());
             LogoutCommand = new RelayCommand(execute => Logout(), canExecute => UserManager.IsAuthenticated);
             RegisterCommand = new RelayCommand(execute => ShowRegisterWindow());
+            ForgotPasswordCommand = new RelayCommand(execute => ShowForgotPasswordWindow());
         }
 
 
         public bool CanLogin() =>
             !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
+
 
         public void Login()
         {
@@ -123,8 +126,6 @@ namespace CookMaster.ViewModels
             currentMain?.Show();
         }
 
-
-
         private void Logout()
         {
             //Logga ut användaren
@@ -135,5 +136,29 @@ namespace CookMaster.ViewModels
             Application.Current.MainWindow = newMain;
             newMain.Show();
         }
+
+        public void ShowForgotPasswordWindow()
+        {
+            var forgotPasswordWindow = new ForgotPasswordWindow();
+            //Göm MainWindow medan RegisterWindow är öppen
+            var currentMain = Application.Current.MainWindow;
+            if (currentMain != null)
+            {
+                forgotPasswordWindow.Owner = currentMain;
+                currentMain.Hide();
+            }
+
+            var result = forgotPasswordWindow.ShowDialog();
+
+            // Om null/false betrakta det som "cancel" — ta tillbaka föregående fönster.
+            if (result != true)
+            {
+                currentMain?.Show();
+                return;
+            }
+            //Om registreringen lyckades, visa MainWindow igen
+            currentMain?.Show();
+        }
+
     }
 }

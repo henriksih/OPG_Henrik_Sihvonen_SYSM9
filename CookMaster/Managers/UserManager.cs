@@ -40,6 +40,8 @@ namespace CookMaster.Managers
                 Username = "user",
                 Password = "a", //"password",
                 Country = "Sweden",
+                SecurityQuestion = "Vilken är din favoritfärg?",
+                SecurityAnswer = "blå",
                 MyRecipeList = new System.Collections.ObjectModel.ObservableCollection<Recipe>()
             });
             _users.Add(new Admin
@@ -47,6 +49,8 @@ namespace CookMaster.Managers
                 Username = "admin",
                 Password = "a", //"password",
                 Country = "Norge",
+                SecurityQuestion = "Vilken är din favoritfärg?",
+                SecurityAnswer = "röd",
                 MyRecipeList = new System.Collections.ObjectModel.ObservableCollection<Recipe>()
             });
         }
@@ -90,7 +94,14 @@ namespace CookMaster.Managers
 
         public void ChangePassword(string user, string password)
         {
+            if (string.IsNullOrWhiteSpace(user))
+                return;
 
+            var found = FindUser(user);
+            if (found != null)
+            {
+                found.Password = password;
+            }
         }
 
         public User? GetLoggedin()

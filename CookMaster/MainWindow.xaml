@@ -16,21 +16,24 @@
         </Grid.RowDefinitions>
         
         <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" Margin="25">
-            <Label Grid.Row="0" Content="CookMaster" FontSize="100"/>
+            <Label 
+                Grid.Row="0" 
+                Content="CookMaster" 
+                FontSize="100"/>
         </StackPanel>
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
             <TextBlock Text="Användarnamn"  
                        Height="30"
                        Width="150"
-                       FontSize="20"
+                       FontSize="17"
                        TextAlignment="Center"
                        Margin="5"/>
 
             <TextBlock Text="Lösenord"  
                        Height="30"
                        Width="150"
-                       FontSize="20"
+                       FontSize="17"
                        TextAlignment="Center"
                        Margin="5"/>
         </StackPanel>
@@ -38,7 +41,7 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
             <TextBox Height="30" 
                      Width="100" 
-                     FontSize="20" 
+                     FontSize="17" 
                      VerticalAlignment="Top" 
                      HorizontalAlignment="Right" 
                      Margin="5,5,20,5"
@@ -46,30 +49,40 @@
             <PasswordBox x:Name="Pwd" 
                          PasswordChanged="Pwd_PasswordChanged" Height="30" 
                          Width="100" 
-                         FontSize="20" 
+                         FontSize="17" 
                          VerticalAlignment="Top" 
                          HorizontalAlignment="Right" 
                          Margin="20,5,5,5" />
         </StackPanel>
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="3">
+            
             <Button 
                 Content="Login" 
                 Command="{Binding LoginCommand}"
                 IsDefault="True"
-                Height="30" Width="100" 
-                FontSize="20" 
+                Height="30" Width="130" 
+                FontSize="17" 
                 VerticalAlignment="Top" 
-                HorizontalAlignment="Right" 
+                HorizontalAlignment="Center" 
                 Margin="5"/>
             <Button 
                 Content="Register" 
                 Command="{Binding RegisterCommand}" 
                 Height="30" 
-                Width="100" 
-                FontSize="20" 
+                Width="130" 
+                FontSize="17" 
                 VerticalAlignment="Top" 
-                HorizontalAlignment="Center" 
+                HorizontalAlignment="Left" 
+                Margin="5"/>
+            <Button 
+                Content="Glömt lösenord" 
+                Command="{Binding ForgotPasswordCommand}"
+                IsDefault="True"
+                Height="30" Width="130" 
+                FontSize="17" 
+                VerticalAlignment="Top" 
+                HorizontalAlignment="Right" 
                 Margin="5"/>
         </StackPanel>
 

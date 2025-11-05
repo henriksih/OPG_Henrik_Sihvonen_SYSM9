@@ -19,6 +19,21 @@ namespace CookMaster.Models
             set { _password = value; OnPropertyChanged(); }
         }
 
+        private string? _securityQuestion;
+        public string? SecurityQuestion
+        {
+            get => _securityQuestion;
+            set { _securityQuestion = value; OnPropertyChanged(); }
+        }
+
+        private string? _securityAnswer;
+        public string? SecurityAnswer
+        {
+            get => _securityAnswer;
+            set { _securityAnswer = value; OnPropertyChanged(); }
+        }
+
+
         private string? _country;
         public string? Country
         {
@@ -26,23 +41,6 @@ namespace CookMaster.Models
             set { _country = value; OnPropertyChanged(); }
         }
 
-
-        //public string? Username { get; set; }
-        //public string? Password { get; set; }
-        //public string? Country { get; set; }
-
         public ObservableCollection<Recipe>? MyRecipeList;
-
-        //private readonly UserManager? _userManager;
-
-        //public void ValidateLogin()
-        //{
-        //    if (_userManager.Login(Username, Password))
-        //    {
-
-        //    }
-        //}
-
-
     }
 }
