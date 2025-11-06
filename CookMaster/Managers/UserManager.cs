@@ -38,7 +38,7 @@ namespace CookMaster.Managers
             _users.Add(new User
             {
                 Username = "user",
-                Password = "a", //"password",
+                Password = "password",
                 Country = "Sweden",
                 SecurityQuestion = "Vilken är din favoritfärg?",
                 SecurityAnswer = "blå",
@@ -47,7 +47,7 @@ namespace CookMaster.Managers
             _users.Add(new Admin
             {
                 Username = "admin",
-                Password = "a", //"password",
+                Password = "password",
                 Country = "Norge",
                 SecurityQuestion = "Vilken är din favoritfärg?",
                 SecurityAnswer = "röd",
