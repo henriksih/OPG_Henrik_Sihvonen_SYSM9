@@ -31,8 +31,27 @@ namespace CookMaster.Views
             // prenumerera på om fönstret är framgångsrikt
             forgotPasswordWindowVM.OnUpdateSuccess += (s, e) =>
             {
-                // Och om så blir DialogResult sant
-                this.DialogResult = true;
+                try
+                {
+                    this.DialogResult = true;
+                }
+                catch (InvalidOperationException)
+                {
+                    this.Close();
+                }
+            };
+
+            // prenumerera på när användaren avbryter
+            forgotPasswordWindowVM.OnCancelRequested += (s, e) =>
+            {
+                try
+                {
+                    this.DialogResult = false;
+                }
+                catch (InvalidOperationException)
+                {
+                    this.Close();
+                }
             };
         }
     }

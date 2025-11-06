@@ -81,14 +81,19 @@ namespace CookMaster.ViewModels
 
         public ICommand? UpdateCommand { get; }
         public ICommand? CancelCommand { get; }
+        //public Action<object, object> OnCancelRequested { get; internal set; }
 
         public event EventHandler? OnUpdateSuccess;
+
+        public event EventHandler? OnCancelRequested;
 
 
         public ForgotPasswordWindowViewModel(UserManager userManager)
         {
             UserManager = userManager;
             UpdateCommand = new RelayCommand(execute => UpdatePassword(Username));
+            CancelCommand = new RelayCommand(_ => OnCancelRequested?.Invoke(this, EventArgs.Empty));
+
             // initiera för att undvika null-värden
             _username = string.Empty;
             _password = string.Empty;
@@ -183,5 +188,11 @@ namespace CookMaster.ViewModels
 
             OnUpdateSuccess?.Invoke(this, EventArgs.Empty);
         }
+
+        public void Close()
+        {
+            OnCancelRequested?.Invoke(this, EventArgs.Empty);
+        }
+
     }
 }
