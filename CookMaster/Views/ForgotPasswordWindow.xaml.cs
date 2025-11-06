@@ -12,7 +12,14 @@ namespace CookMaster.Views
         public ForgotPasswordWindow()
         {
             InitializeComponent();
-            var userManager = (UserManager)Application.Current.Resources["UserManager"];
+            var userManager = Application.Current.Resources["UserManager"] as UserManager;
+            if (userManager == null)
+            {
+                MessageBox.Show("Ett fel har inträffat, vänligen starta om applikationen", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Close();
+                return;
+            }
+
             var forgotPasswordWindowVM = new ForgotPasswordWindowViewModel(userManager);
             DataContext = forgotPasswordWindowVM;
 

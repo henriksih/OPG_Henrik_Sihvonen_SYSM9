@@ -83,7 +83,7 @@ namespace CookMaster.ViewModels
         public ForgotPasswordWindowViewModel(UserManager userManager)
         {
             UserManager = userManager;
-            UpdateCommand = new RelayCommand(execute => UpdatePassword(Username));
+            UpdateCommand = new RelayCommand(execute => UpdatePassword(Username), canExecute => ValidUser());
             CancelCommand = new RelayCommand(_ => OnCancelRequested?.Invoke(this, EventArgs.Empty));
 
             // initiera för att undvika null-värden
@@ -95,17 +95,14 @@ namespace CookMaster.ViewModels
             _error = string.Empty;
         }
 
-        //public bool ValidUser(string Username)
-        //{
-        //    if (UserManager.FindUser(Username).Username == this.Username && )
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
+        
+        public bool ValidUser()
+        {
+            return !string.IsNullOrWhiteSpace(Username)
+                && !string.IsNullOrWhiteSpace(SecurityAnswerInput) // if you added this property
+                && IsPasswordValid(Password)
+                && string.Equals(Password, ConfirmPassword, StringComparison.Ordinal);
+        }
 
         private static bool IsPasswordValid(string? pwd)
         {
