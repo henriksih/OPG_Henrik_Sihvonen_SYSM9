@@ -1,11 +1,9 @@
 ﻿using CookMaster.Managers;
 using CookMaster.MVVM;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
-using System.Xml.Linq;
-using System.Text.RegularExpressions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CookMaster.ViewModels
 {
@@ -23,12 +21,15 @@ namespace CookMaster.ViewModels
         public string Username
         {
             get => _username;
-            set { _username = value; 
-                OnPropertyChanged(); 
+            set
+            {
+                _username = value;
+                OnPropertyChanged();
                 CommandManager.InvalidateRequerySuggested();
                 // ta bort felmeddelande medan man editerar
-                Error = string.Empty; }
+                Error = string.Empty;
             }
+        }
 
         public string Password
         {
@@ -127,7 +128,7 @@ namespace CookMaster.ViewModels
             var logged = UserManager?.GetLoggedin();
             if (logged == null)
                 return;
-            
+
             // Spara gamla usernamnet, så recepten kan föras över till det nya
             var oldUsername = logged.Username ?? string.Empty;
 
@@ -191,7 +192,7 @@ namespace CookMaster.ViewModels
 
             // Stäng fönstret
             IfClosed?.Invoke(this, EventArgs.Empty);
-            
+
         }
     }
 }

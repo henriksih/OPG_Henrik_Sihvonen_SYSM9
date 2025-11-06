@@ -1,8 +1,8 @@
 ﻿using CookMaster.Managers;
 using CookMaster.MVVM;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 using System.Text.RegularExpressions;
+using System.Windows.Input;
 
 namespace CookMaster.ViewModels
 {
@@ -62,11 +62,11 @@ namespace CookMaster.ViewModels
         // Kräv ett usernamn och giltigt passord för att kunna registrera
         public bool CanRegister() =>
             !string.IsNullOrWhiteSpace(Username);
-        
 
-            // Om man sätter kraven på lösen här får man inga felmeddelanden
-            //&& IsPasswordValid(Password)
-            //&& string.Equals(Password, ConfirmPassword, System.StringComparison.Ordinal);
+
+        // Om man sätter kraven på lösen här får man inga felmeddelanden
+        //&& IsPasswordValid(Password)
+        //&& string.Equals(Password, ConfirmPassword, System.StringComparison.Ordinal);
 
         public event EventHandler? OnRegisterSuccess;
 
@@ -91,7 +91,7 @@ namespace CookMaster.ViewModels
             if (string.IsNullOrWhiteSpace(pwd))
                 return false;
 
-            
+
             if (pwd.Length < 8)
                 return false;
 

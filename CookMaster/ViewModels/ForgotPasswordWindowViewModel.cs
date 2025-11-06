@@ -1,14 +1,6 @@
 ﻿using CookMaster.Managers;
 using CookMaster.MVVM;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace CookMaster.ViewModels
