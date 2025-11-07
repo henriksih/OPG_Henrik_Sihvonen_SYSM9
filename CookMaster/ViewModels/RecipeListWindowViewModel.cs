@@ -47,7 +47,6 @@ namespace CookMaster.ViewModels
 
         }
 
-        //Expose current loggedin user
         public User? CurrentUser => UserManager?.GetLoggedin();
 
         public RecipeListWindowViewModel()
@@ -75,7 +74,7 @@ namespace CookMaster.ViewModels
                 };
             }
 
-            // Refresh the view when logged-in user changes
+            // Ladda om när user ändras
             if (UserManager != null)
             {
                 UserManager.PropertyChanged += UserManager_PropertyChanged;
@@ -94,12 +93,8 @@ namespace CookMaster.ViewModels
             if (item is not Recipe r) return false;
             var logged = UserManager?.GetLoggedin();
 
-            // Delegate business rule to RecipeManager
+            // kolla om receptet tillhör usern
             return RecipeManager?.IsVisibleTo(r, logged) ?? false;
-
-            //if (logged == null) return false; // or return true to show all when no user
-            //if (logged is CookMaster.Models.Admin) return true;
-            //return string.Equals(r.CreatedBy, logged.Username, StringComparison.OrdinalIgnoreCase);
         }
 
         private void UserManager_PropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -118,9 +113,6 @@ namespace CookMaster.ViewModels
         public ICommand AboutCookMasterCommand { get; }
         public ICommand GetUserInfoCommand { get; }
         public ICommand LogOutCommand { get; }
-
-        // Event triggas när VM vill 
-        //public event EventHandler? RequestLogout;
 
 
         public void AddRecipe()
@@ -149,69 +141,6 @@ namespace CookMaster.ViewModels
         public event EventHandler<Recipe?>? RequestOpenRecipeDetail;
         public void GetRecipe()
         {
-            // Kontrollera att ett recept är valt
-            //if (SelectedRecipe == null) return;
-            //RequestOpenRecipeDetail?.Invoke(this, SelectedRecipe);
-            //else
-            //{
-            //    CanDo();
-            //}
-
-            //var recipeDetailWindow = new RecipeDetailWindow();
-            ////Göm RecipeListWindow medan RecipeDetailWindow är öppen
-            //var main = Application.Current.MainWindow;
-            //if (main != null)
-            //{
-            //    recipeDetailWindow.Owner = main;
-            //    main.Hide();
-            //}
-
-            //// Skapa ViewModel med det valda receptet och sätt som DataContext
-            //var vm = new RecipeDetailWindowViewModel(UserManager, RecipeManager, SelectedRecipe);
-            //recipeDetailWindow.DataContext = vm;
-
-            //var result = recipeDetailWindow.ShowDialog();
-
-            //if (result != true)
-            //{
-            //    Application.Current.Shutdown();
-            //    return;
-            //}
-            ////Om registreringen lyckades, visa RecipeListWindow igen
-            //main?.Show();
-
-            //Gamla implementationen nedan
-
-            //// Kontrollera att ett recept är valt
-            //if (SelectedRecipe == null) return;
-
-
-            //var recipeDetailWindow = new RecipeDetailWindow();
-            ////Göm RecipeListWindow medan RecipeDetailWindow är öppen
-            //var main = Application.Current.MainWindow;
-            //if (main != null)
-            //{
-            //    recipeDetailWindow.Owner = main;
-            //    main.Hide();
-            //}
-
-            //// Skapa ViewModel med det valda receptet och sätt som DataContext
-            //var vm = new RecipeDetailWindowViewModel(UserManager, RecipeManager, SelectedRecipe);
-            //recipeDetailWindow.DataContext = vm;
-
-            //var result = recipeDetailWindow.ShowDialog();
-
-            //if (result != true)
-            //{
-            //    //Application.Current.Shutdown();
-            //    main?.Show();
-            //    return;
-            //}
-            ////Om registreringen lyckades, visa RecipeListWindow igen
-            //main?.Show();
-
-            //Nya varianten:
-
             // Säkerställ att ett recept är selekterat
             if (SelectedRecipe == null) return;
 
@@ -256,16 +185,13 @@ namespace CookMaster.ViewModels
         {
             var aboutWindow = new AboutWindow();
             var main = Application.Current.MainWindow;
+
             if (main != null)
             {
                 aboutWindow.Owner = main;
-                //main.Hide();
             }
 
             var result = aboutWindow.ShowDialog();
-
-            // Visa recipelistwindow oavsett hur det går
-            //main?.Show();
         }
         public void GetUserInfo()
         {
@@ -276,7 +202,6 @@ namespace CookMaster.ViewModels
             if (main != null)
             {
                 userInfoWindow.Owner = main;
-                //main.Hide();
             }
 
             var result = userInfoWindow.ShowDialog();
@@ -291,7 +216,7 @@ namespace CookMaster.ViewModels
             {
                 //Skapa ett mainWindow om det inte finns
                 var fallback = new MainWindow();
-                // ensure the new main's VM password is cleared
+                // Säkerställ att det nya MinWindowVMs lösenord nollställs
                 if (fallback.DataContext is MainWindowViewModel fallbackVm)
                     fallbackVm.Password = string.Empty;
                 Application.Current.MainWindow = fallback;
@@ -302,7 +227,7 @@ namespace CookMaster.ViewModels
             var owner = current.Owner;
             if (owner != null)
             {
-                // Clear password on the original MainWindow's VM before showing it
+                // Töm lösenordet i MainWindowVM
                 if (owner.DataContext is MainWindowViewModel ownerVm)
                     ownerVm.Password = string.Empty;
                 // Gör MainWindow till Owner, visa det och stäng RecipeListWindow
@@ -314,7 +239,7 @@ namespace CookMaster.ViewModels
             {
                 // Om ingen owner finns, skapa och visa ett nytt MainWindow
                 var newMain = new MainWindow();
-                // ensure the new main's VM password is cleared
+                // kolla att nya MainWindowVMs lösen är tomt
                 if (newMain.DataContext is MainWindowViewModel newMainVm)
                     newMainVm.Password = string.Empty;
 
@@ -324,11 +249,11 @@ namespace CookMaster.ViewModels
             }
         }
         public bool CanAdd() => true;
+        //kolla att ett recept är valt innan Receptdetaljer eller tabort knapparna kan användas
         public bool CanDo()
         {
             if (SelectedRecipe != null)
             {
-
                 return true;
             }
             else return false;

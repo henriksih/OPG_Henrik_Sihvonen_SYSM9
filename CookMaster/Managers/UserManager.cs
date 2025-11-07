@@ -5,9 +5,7 @@ namespace CookMaster.Managers
 {
     public class UserManager : ViewModelBase
     //Hantera users och samla i dem en lista skapa default och Admin usrar.
-
     {
-
         private readonly List<User> _users = new List<User>();
 
         private User? _loggedIn;

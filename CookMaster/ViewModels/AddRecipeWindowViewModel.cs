@@ -63,7 +63,7 @@ namespace CookMaster.ViewModels
 
         public event EventHandler? OnSaveRecipeSuccess;
 
-        // To know when a recipe was successfully added
+        // För att veta om ett recept är tillagt
         private bool _isAdded;
         public bool IsAdded
         {
@@ -71,7 +71,7 @@ namespace CookMaster.ViewModels
             private set { _isAdded = value; OnPropertyChanged(); }
         }
 
-        //Constructor
+        //Konstruktor
         public AddRecipeWindowViewModel(RecipeManager recipeManager, UserManager userManager)
         {
             RecipeManager = recipeManager;
@@ -84,7 +84,6 @@ namespace CookMaster.ViewModels
                     if (e.PropertyName == nameof(UserManager.LoggedIn))
                     {
                         OnPropertyChanged(nameof(CurrentUser));
-                        // also update CreatedBy if you want it to follow the login immediately
                         CreatedBy = UserManager.GetLoggedin()?.Username;
                     }
                 };
@@ -100,23 +99,51 @@ namespace CookMaster.ViewModels
             && !string.IsNullOrWhiteSpace(Ingredients)
             && !string.IsNullOrWhiteSpace(Instructions)
             && !string.IsNullOrWhiteSpace(Category);
-        //&& !string.IsNullOrWhiteSpace(CreatedBy);
+        //User koll behövs inte för det sätts av applikationen och kan inte ändras av användaren
+        //Date är också satt och kan bar ändras via datepickern.
+
 
 
         public void AddRecipe()
         {
-            if (RecipeManager == null) return;
+            // Stoppa om RecipeManager saknas
+            if (RecipeManager == null)
+                return;
 
-            // Använd alltid inloggad användare om tillgänglig
-            var creator = UserManager?.GetLoggedin()?.Username ?? _createdBy ?? string.Empty;
+            // Börja med en tom creator
+            string creator = string.Empty;
 
-            RecipeManager.AddRecipe(
-                _title ?? string.Empty,
-                _ingredients ?? string.Empty,
-                _instructions ?? string.Empty,
-                _category ?? string.Empty,
-                _date,
-                creator);
+            // Försök använd den inloggade användarens användarnamn
+            if (UserManager != null)
+            {
+                var logged = UserManager.GetLoggedin();
+                if (logged != null && !string.IsNullOrEmpty(logged.Username))
+                {
+                    creator = logged.Username;
+                }
+            }
+
+            // Om ingen är inloggad, använd värdet i _createdBy (om det finns)
+            if (string.IsNullOrEmpty(creator) && !string.IsNullOrEmpty(_createdBy))
+            {
+                creator = _createdBy;
+            }
+
+            // Som sista utväg, se till att creator inte blir null (använd tom sträng)
+            if (string.IsNullOrEmpty(creator))
+            {
+                creator = string.Empty;
+            }
+
+            // Säkerställ att vi inte skickar null till RecipeManager (ersätt med tomma strängar)
+            string title = _title ?? string.Empty;
+            string ingredients = _ingredients ?? string.Empty;
+            string instructions = _instructions ?? string.Empty;
+            string category = _category ?? string.Empty;
+            DateOnly date = _date;
+
+            // Lägg till receptet
+            RecipeManager.AddRecipe(title, ingredients, instructions, category, date, creator);
 
             IsAdded = true;
             OnSaveRecipeSuccess?.Invoke(this, EventArgs.Empty);

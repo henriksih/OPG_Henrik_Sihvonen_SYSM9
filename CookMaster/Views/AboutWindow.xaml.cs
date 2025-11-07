@@ -14,7 +14,6 @@ namespace CookMaster.Views
             var aboutWindowVM = new AboutWindowViewModel();
             DataContext = aboutWindowVM;
 
-
             // prenumerera på om knappen Stäng är tryckt på
             aboutWindowVM.IfClosed += (s, e) =>
             {
@@ -27,9 +26,7 @@ namespace CookMaster.Views
                 {
                     this.Close();
                 }
-
             };
-            //DataContext = aboutWindowVM;
         }
     }
 }

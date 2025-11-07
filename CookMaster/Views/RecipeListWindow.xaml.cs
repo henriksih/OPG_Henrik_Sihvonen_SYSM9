@@ -30,11 +30,6 @@ namespace CookMaster.Views
                 detailWindow.ShowDialog();
                 this.Show();
             };
-
-            //if (vm != null)
-            //{
-            //    vm.PropertyChanged += Vm_PropertyChanged;
-            //}
         }
 
 
@@ -68,30 +63,6 @@ namespace CookMaster.Views
 
             var selected = vm.SelectedRecipe;
             if (selected == null) return;
-
-            // Öppna RecipeDetailWindow
-            var detailWindow = new RecipeDetailWindow
-            {
-                Owner = this,
-                DataContext = new RecipeDetailWindowViewModel(vm.UserManager, vm.RecipeManager, selected)
-
-            };
-
-            // Skapa recipeDetailWindowViewModel med rätt indata och sätt DataContext
-            //detailWindow.DataContext = new RecipeDetailWindowViewModel(vm.UserManager, vm.RecipeManager, selected);
-
-            // Göm nuvarande RecipeListWindow
-            this.Hide();
-            detailWindow.ShowDialog();
-            this.Show();
-
-            // sätt selectedRecipe till null så fönstret inte återöppnas med en gång
-            vm.SelectedRecipe = null;
         }
-
-        //private void Receptdetaljer_Click(object sender, RoutedEventArgs e)
-        //{
-        //    (DataContext as RecipeListWindowViewModel)?.GetRecipe();
-        //}
     }
 }

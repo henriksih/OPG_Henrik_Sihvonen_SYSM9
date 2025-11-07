@@ -36,8 +36,7 @@ namespace CookMaster.ViewModels
             get => _password;
             set { _password = value; OnPropertyChanged(); CommandManager.InvalidateRequerySuggested(); }
         }
-
-        // New confirm-password property — bind your second password input to this
+                
         public string ConfirmPassword
         {
             get => _confirmPassword;
@@ -106,8 +105,7 @@ namespace CookMaster.ViewModels
 
         private static bool IsPasswordValid(string? pwd)
         {
-            // Same rules as RegisterWindow:
-            // not empty, at least 8 chars, at least one digit and one special character
+            // Samma regler som i RegisterWindow:
             if (string.IsNullOrWhiteSpace(pwd))
                 return false;
 

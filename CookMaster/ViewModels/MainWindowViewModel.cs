@@ -12,9 +12,9 @@ namespace CookMaster.ViewModels
 
         public RecipeManager recipeManager { get; }
 
-        private string _username;
-        private string _password;
-        private string _error;
+        private string _username = string.Empty;
+        private string _password = string.Empty;
+        private string _error = string.Empty;
 
         public string Username
         {
@@ -129,7 +129,7 @@ namespace CookMaster.ViewModels
         private void Logout()
         {
             //Logga ut användaren
-            UserManager.Logout();
+            UserManager?.Logout();
 
             //Visa MainWindow
             var newMain = new MainWindow();

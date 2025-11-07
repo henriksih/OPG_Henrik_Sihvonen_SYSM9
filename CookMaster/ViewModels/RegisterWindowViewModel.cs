@@ -60,13 +60,10 @@ namespace CookMaster.ViewModels
         public ICommand? RegisterCommand { get; }
 
         // Kräv ett usernamn och giltigt passord för att kunna registrera
+        // Om man sätter kraven på lösen här får man inga felmeddelanden
+
         public bool CanRegister() =>
             !string.IsNullOrWhiteSpace(Username);
-
-
-        // Om man sätter kraven på lösen här får man inga felmeddelanden
-        //&& IsPasswordValid(Password)
-        //&& string.Equals(Password, ConfirmPassword, System.StringComparison.Ordinal);
 
         public event EventHandler? OnRegisterSuccess;
 
@@ -75,12 +72,13 @@ namespace CookMaster.ViewModels
         {
             UserManager = userManager;
             RegisterCommand = new RelayCommand(execute => Register(Username), canExecute => CanRegister());
-            Countries = new ObservableCollection<string> { "Sverige", "Norge", "Danmark" };
+            _countries = new ObservableCollection<string> { "Sverige", "Norge", "Danmark" };
             // initiera för att undvika null-värden
             _password = string.Empty;
             _confirmPassword = string.Empty;
             _username = string.Empty;
             _country = string.Empty;
+            _error = string.Empty;
         }
 
         private static bool IsPasswordValid(string? pwd)

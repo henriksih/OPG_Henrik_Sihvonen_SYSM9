@@ -14,7 +14,7 @@ namespace CookMaster.Views
             InitializeComponent();
             var userManager = (UserManager)Application.Current.Resources["UserManager"];
             var recipeManager = (RecipeManager)Application.Current.Resources["RecipeManager"];
-            // pass both managers so the VM can default CreatedBy to the logged-in user
+            // Skicka båda managers så VM kan sätta CreatedBy till den inloggade usern
             var addRecipeWindowVM = new AddRecipeWindowViewModel(recipeManager, userManager);
             DataContext = addRecipeWindowVM;
 
@@ -30,7 +30,7 @@ namespace CookMaster.Views
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            // Ensure the owner window is shown again if this window is closed
+            // Säkerställ att RecipeListWindow visas om detta stängs
             var recipeListWindow = Application.Current.MainWindow;
             recipeListWindow?.Show();
         }

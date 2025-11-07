@@ -3,11 +3,11 @@ using System.Windows.Data;
 
 namespace CookMaster.MVVM
 {
+    //Klass för att hantera konverteringen från DateTime till DateOnly och v.v.
+
     [ValueConversion(typeof(DateOnly), typeof(DateTime?))]
     public class DateOnlyToNullableDateTimeConverter : IValueConverter
     {
-        //private bool ndt;
-
         // DateOnly -> DateTime?
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
@@ -21,11 +21,8 @@ namespace CookMaster.MVVM
         {
             if (value is DateTime dt)
                 return DateOnly.FromDateTime(dt);
-            if (value is DateTime ndt)
-                return DateOnly.FromDateTime(ndt);
 
-            // If your VM property is non-nullable DateOnly, return a default value.
-            // If you prefer null semantics, change the VM property to DateOnly? and return null here.
+            // Returnera ett defaultvärde annars.
             return default(DateOnly);
         }
     }

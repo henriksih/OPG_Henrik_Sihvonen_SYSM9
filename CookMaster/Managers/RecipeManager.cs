@@ -51,54 +51,11 @@ namespace CookMaster.Managers
         public bool IsVisibleTo(Recipe recipe, User? user)
         {
             if (recipe == null) return false;
-            if (user == null) return true; // show all if no user
-            // Admin users see everything
+            if (user == null) return true; // visa alla om ingen user finns
+            // Admin usern ser allt
             if (user is Admin) return true;
-            // Otherwise only show recipes created by that user
+            // annars visa bara CreatedBy userns recept skippa koll på stor/liten bokstav
             return string.Equals(recipe.CreatedBy, user.Username, StringComparison.OrdinalIgnoreCase);
         }
-        //public void RemoveRecipe(Recipe recipe)
-        //{
-
-        //}
-
-        //public ObservableCollection<Recipe>? GetAllRecipes()
-        //{
-        //    return Recipes;
-        //}
-
-        //public ObservableCollection<Recipe>? GetByUser(User user)
-        //{
-        //    if (Recipes == null) return null;
-        //    if (user == null) return new ObservableCollection<Recipe>(Recipes);
-
-        //    // Om usern är admin, ge tillgång till alla recept
-        //    if (user is Admin)
-        //    {
-        //        return Recipes;
-        //    }
-
-        //    var username = user.Username ?? string.Empty;
-        //    var filtered = Recipes.Where(r => string.Equals(r.CreatedBy, username, StringComparison.OrdinalIgnoreCase));
-        //    return new ObservableCollection<Recipe>(filtered);
-        //}
-
-
-
-        //public void Filter(string criteria)
-        //{
-
-        //}
-
-        //public void UpdateRecipe(Recipe existing, string title, string ingredients, string instructions, string category, DateOnly date, string createdBy)
-        //{
-        //    if (existing == null) return;
-        //    existing.Title = title;
-        //    existing.Ingredients = ingredients;
-        //    existing.Instructions = instructions;
-        //    existing.Category = category;
-        //    existing.Date = date;
-        //    existing.CreatedBy = createdBy;
-        //}
     }
 }

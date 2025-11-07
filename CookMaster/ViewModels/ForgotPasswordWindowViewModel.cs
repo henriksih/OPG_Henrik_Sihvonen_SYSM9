@@ -26,7 +26,7 @@ namespace CookMaster.ViewModels
                 CommandManager.InvalidateRequerySuggested();
                 Error = string.Empty;
 
-                // Load security question for the typed username (if user exists)
+                // Ladda säkerhetsfråga om usern finns
                 if (!string.IsNullOrWhiteSpace(_username) && UserManager != null)
                 {
                     var u = UserManager.FindUser(_username);
@@ -58,7 +58,6 @@ namespace CookMaster.ViewModels
             set { _securityQuestion = value; OnPropertyChanged(); }
         }
 
-        // What the user types as answer
         public string SecurityAnswerInput
         {
             get => _securityAnswerInput;
@@ -84,7 +83,7 @@ namespace CookMaster.ViewModels
         {
             UserManager = userManager;
             UpdateCommand = new RelayCommand(execute => UpdatePassword(Username), canExecute => ValidUser());
-            CancelCommand = new RelayCommand(_ => OnCancelRequested?.Invoke(this, EventArgs.Empty));
+            CancelCommand = new RelayCommand(_ => Close());
 
             // initiera för att undvika null-värden
             _username = string.Empty;
@@ -168,10 +167,10 @@ namespace CookMaster.ViewModels
                 return;
             }
 
-            // Perform the change
+            // Gör bytet
             UserManager.ChangePassword(username, Password);
 
-            // Optionally clear sensitive fields
+            // Töm sedan fälten
             Password = string.Empty;
             ConfirmPassword = string.Empty;
 
@@ -180,7 +179,10 @@ namespace CookMaster.ViewModels
 
         public void Close()
         {
-            OnCancelRequested?.Invoke(this, EventArgs.Empty);
+            if (OnCancelRequested != null)
+            {
+                OnCancelRequested(this, EventArgs.Empty);
+            }
         }
 
     }

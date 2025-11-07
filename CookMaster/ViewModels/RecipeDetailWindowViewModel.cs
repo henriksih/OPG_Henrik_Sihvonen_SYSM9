@@ -120,10 +120,8 @@ namespace CookMaster.ViewModels
             // Kommandon som är beroende av om IsEditing är true
             (EditRecipeCommand as RelayCommand)?.RaiseCanExecuteChanged();
             (SaveRecipeCommand as RelayCommand)?.RaiseCanExecuteChanged();
-            //(CancelEditCommand as RelayCommand)?.RaiseCanExecuteChanged();
         }
         public ICommand EditRecipeCommand { get; }
-
         public ICommand SaveRecipeCommand { get; }
         public ICommand CancelEditCommand { get; }
 
@@ -138,7 +136,6 @@ namespace CookMaster.ViewModels
             SelectedRecipe.Category = Category;
             SelectedRecipe.Date = Date;
             SelectedRecipe.CreatedBy = CreatedBy;
-            //RecipeManager.UpdateRecipe(Title, Ingredients, Instructions, Category, Date, CreatedBy);
 
             IsEditing = false;
             (EditRecipeCommand as RelayCommand)?.RaiseCanExecuteChanged();
@@ -155,7 +152,7 @@ namespace CookMaster.ViewModels
 
         private void CancelEdit()
         {
-            // Revert properties from the model
+            // Återställ om avbrutet och stäng fönstret
             CopySelectedToProperties();
             (EditRecipeCommand as RelayCommand)?.RaiseCanExecuteChanged();
             (SaveRecipeCommand as RelayCommand)?.RaiseCanExecuteChanged();

@@ -23,7 +23,8 @@ framtidens yrkesliv definitivt kommer att innebära att AI hela tiden står till
 Ett avgörande problem var MVVM strukturen, som jag i teorin på ett övergripande sätt förstår hur den är tänkt att fungera och hur
 det hjälper att hålla isär de olika delarna av en applikation, i den mån det är möjligt. Min förståelse hjälpte dock inte riktigt
 att se hur det i detta fall skulle implementeras och när problemen hopade sig och tiden gick, blev det mer en fråga om att få till 
-funktionaliteten än att följa en struktur med väldigt vaga konturer.
+funktionaliteten än att följa en struktur med väldigt vaga konturer. Tidsbrist gjorde att jag avstod från att implementera all VG 
+funktionalitet, för att undvika ett totalhaveri på slutet...
 
 Jag tycker det blev lite för många nya aspekter och tekniker introducerade för att ersätta vad vi tidigare lärt på väldigt kort tid,
 men samtidigt har det inneburit många timmar av problemlösning som jag är övertygad om kommer att vara till stor nytta framöver.
